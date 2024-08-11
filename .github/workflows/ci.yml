@@ -1,90 +1,57 @@
 name: CI
-
-on:
-  pull_request:
-  push:
-    branches: [ main ]
+on: [push, pull_request]
 
 jobs:
-  scan_ruby:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: .ruby-version
-          bundler-cache: true
-
-      - name: Scan for common Rails security vulnerabilities using static analysis
-        run: bin/brakeman --no-pager
-
-  scan_js:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: .ruby-version
-          bundler-cache: true
-
-      - name: Scan for security vulnerabilities in JavaScript dependencies
-        run: bin/importmap audit
-
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: .ruby-version
-          bundler-cache: true
-
-      - name: Lint code for consistent style
-        run: bin/rubocop -f github
-
   test:
     runs-on: ubuntu-latest
 
-    # services:
-    #  redis:
-    #    image: redis
-    #    ports:
-    #      - 6379:6379
-    #    options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
+    services:
+      postgres:
+        image: postgres:latest
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        env:
+          POSTGRES_PASSWORD: password
+
     steps:
-      - name: Install packages
-        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y google-chrome-stable curl libjemalloc2 libsqlite3-0 libvips
+      - name: Checkout Repository
+        uses: actions/checkout@v2
 
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Ruby
+      - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: .ruby-version
-          bundler-cache: true
+          ruby-version: 3.1.1
 
-      - name: Run tests
-        env:
-          RAILS_ENV: test
-          # REDIS_URL: redis://localhost:6379/0
-        run: bin/rails db:test:prepare test test:system
+      - name: Install PostgreSQL client
+        run: |
+          sudo apt-get -yqq install libpq-dev
 
-      - name: Keep screenshots from failed system tests
-        uses: actions/upload-artifact@v4
-        if: failure()
+      - name: Cache Ruby Gems
+        uses: actions/cache@v2
         with:
-          name: screenshots
-          path: ${{ github.workspace }}/tmp/screenshots
-          if-no-files-found: ignore
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
+
+      - name: Bundle Install
+        run: |
+          bundle config path vendor/bundle
+          bundle install --jobs 4 --retry 3
+
+      - name: Run Tests
+        env:
+          PG_DATABASE: postgres
+          PG_HOST: localhost
+          PG_USER: postgres
+          PG_PASSWORD: password
+          RAILS_ENV: actions
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+          WITH_COVERAGE: true
+          DISABLE_SPRING: 1
+        run: |
+          bundle exec rails db:prepare

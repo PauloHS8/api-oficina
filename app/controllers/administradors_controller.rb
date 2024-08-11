@@ -60,7 +60,10 @@ class AdministradorsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_administrador
-      @administrador = Administrador.find(params[:id])
+      @administrador = current_user.administradores.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      # Handle the case where the record is not found or not authorized
+      redirect_to root_path, alert: 'Você não tem permissão para acessar este administrador.'
     end
 
     # Only allow a list of trusted parameters through.

@@ -1,6 +1,6 @@
 class AtendimentosController < ApplicationController
   before_action :set_atendimento, only: %i[ show edit update destroy ]
-
+  require AtendimentosMailer
   # GET /atendimentos or /atendimentos.json
   def index
     @atendimentos = Atendimento.all

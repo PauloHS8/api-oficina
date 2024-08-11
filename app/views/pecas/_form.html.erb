@@ -1,0 +1,47 @@
+<%= form_with(model: peca) do |form| %>
+  <% if peca.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(peca.errors.count, "error") %> prohibited this peca from being saved:</h2>
+
+      <ul>
+        <% peca.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :codigo, style: "display: block" %>
+    <%= form.text_field :codigo %>
+  </div>
+
+  <div>
+    <%= form.label :nome, style: "display: block" %>
+    <%= form.text_field :nome %>
+  </div>
+
+  <div>
+    <%= form.label :preco, style: "display: block" %>
+    <%= form.text_field :preco %>
+  </div>
+
+  <div>
+    <%= form.label :tipo, style: "display: block" %>
+    <%= form.text_field :tipo %>
+  </div>
+
+  <div>
+    <%= form.label :fabricante, style: "display: block" %>
+    <%= form.text_field :fabricante %>
+  </div>
+
+  <div>
+    <%= form.label :data_validade, style: "display: block" %>
+    <%= form.date_field :data_validade %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

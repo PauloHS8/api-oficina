@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  placa: MyString
+  modelo: MyString
+  ano: 1
+  cor: MyString
+  quilometragem: 1
+  chassi: MyString
+
+two:
+  placa: MyString
+  modelo: MyString
+  ano: 1
+  cor: MyString
+  quilometragem: 1
+  chassi: MyString

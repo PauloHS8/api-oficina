@@ -57,6 +57,11 @@ class ClientesController < ApplicationController
     end
   end
 
+  def veiculos
+    cliente = Cliente.find(params[:id])
+    render json: cliente.veiculos.select(:id, :modelo, :placa)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_cliente

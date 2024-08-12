@@ -1,16 +1,16 @@
 <p style="color: green"><%= notice %></p>
 
-<% content_for :title, "Veiculos" %>
+<% content_for :title, "Veículos" %>
 
-<h1>Veiculos</h1>
+<h1>Veículos</h1>
 
 <div id="veiculos">
   <% @veiculos.each do |veiculo| %>
     <%= render veiculo %>
     <p>
-      <%= link_to "Show this veiculo", veiculo %>
+      <%= link_to "Exibir esse veículo", veiculo %>
     </p>
   <% end %>
 </div>
 
-<%= link_to "New veiculo", new_veiculo_path %>
+<%= link_to "Cadastrar veículo", new_veiculo_path %>

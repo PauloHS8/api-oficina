@@ -1,0 +1,74 @@
+<%= form_with(model: atendimento) do |form| %>
+  <% if atendimento.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(atendimento.errors.count, "error") %> prohibited this atendimento from being saved:</h2>
+
+      <ul>
+        <% atendimento.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :cliente_id, "Cliente", style: "display: block" %>
+    <%= form.collection_select :cliente_id, Cliente.all, :id, :nome, prompt: "Selecione um cliente" %>
+  </div>
+
+  <div>
+    <%= form.label :veiculo_id, "Veículo", style: "display: block" %>
+    <%= form.collection_select :veiculo_id, [], :id, :modelo, prompt: "Selecione um veículo", id: "veiculo_select" %>
+  </div>
+
+  <div>
+    <%= form.label :data_inicio, style: "display: block" %>
+    <%= form.datetime_field :data_inicio %>
+  </div>
+
+  <div>
+    <%= form.label :data_termino, style: "display: block" %>
+    <%= form.datetime_field :data_termino %>
+  </div>
+
+  <div>
+    <%= form.label :status, style: "display: block" %>
+    <%= form.text_field :status %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const clienteSelect = document.querySelector("select[name='atendimento[cliente_id]']");
+        const veiculoSelect = document.querySelector("#atendimento_veiculo_id");
+
+        clienteSelect.addEventListener("change", (event) => {
+            const clienteId = event.target.value;
+
+            console.log(clienteId)
+
+            if (clienteId) {
+                fetch(`/clientes/${clienteId}/veiculos`)
+                    .then(response => response.json())
+                    .then(veiculos => {
+                        console.log(veiculos)
+                        veiculoSelect.innerHTML = '<option value="">Selecione um veículo</option>';
+                        veiculos.forEach(veiculo => {
+                            console.log(veiculo)
+                            const option = document.createElement("option");
+                            option.value = veiculo.id;
+                            option.textContent = `${veiculo.placa} - ${veiculo.modelo}`;
+                            veiculoSelect.appendChild(option);
+                        });
+                    });
+            } else {
+                veiculoSelect.innerHTML = '<option value="">Selecione um veículo</option>';
+            }
+        });
+    });
+
+</script>

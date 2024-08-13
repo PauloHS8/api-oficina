@@ -1,4 +1,17 @@
 Rails.application.routes.draw do
+  resources :atendimentos
+  resources :estoques
+  resources :servicos
+  resources :funcionarios
+  resources :clientes
+  resources :veiculos
+  resources :pecas
+  resources :administradors
+
+  resources :clientes do
+    get 'veiculos', on: :member
+  end
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

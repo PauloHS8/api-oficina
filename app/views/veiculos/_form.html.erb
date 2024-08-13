@@ -1,0 +1,52 @@
+<%= form_with(model: veiculo, local: true) do |form| %>
+  <% if veiculo.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(veiculo.errors.count, "error") %> prohibited this veiculo from being saved:</h2>
+
+      <ul>
+        <% veiculo.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :placa %>
+    <%= form.text_field :placa %>
+  </div>
+
+  <div class="field">
+    <%= form.label :modelo %>
+    <%= form.text_field :modelo %>
+  </div>
+
+  <div class="field">
+    <%= form.label :ano %>
+    <%= form.number_field :ano %>
+  </div>
+
+  <div class="field">
+    <%= form.label :cor %>
+    <%= form.text_field :cor %>
+  </div>
+
+  <div class="field">
+    <%= form.label :quilometragem %>
+    <%= form.number_field :quilometragem %>
+  </div>
+
+  <div class="field">
+    <%= form.label :chassi %>
+    <%= form.text_field :chassi %>
+  </div>
+
+  <div class="field">
+    <%= form.label :cliente_id, "Cliente" %>
+    <%= form.collection_select :cliente_id, Cliente.all, :id, :nome, prompt: "Selecione um cliente" %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -24,6 +24,7 @@ class AtendimentosController < ApplicationController
 
     respond_to do |format|
       if @atendimento.save
+        AtendimentoMailer.atendimento_criado(@atendimento).deliver_later
         format.html { redirect_to atendimento_url(@atendimento), notice: "Atendimento was successfully created." }
         format.json { render :show, status: :created, location: @atendimento }
       else

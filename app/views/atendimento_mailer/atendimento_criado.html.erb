@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+</head>
+<body>
+<h1>Atendimento registrado, <%= @atendimento.veiculo.cliente.nome %></h1>
+<p>
+  Agendado para iniciar às <%= @atendimento.data_inicio %> e previsão de finalizar às <%= @atendimento.data_termino %>.
+</p>
+<p>
+  Obrigado pela preferência!
+</p>
+</body>
+</html>

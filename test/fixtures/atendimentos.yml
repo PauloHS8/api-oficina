@@ -4,10 +4,10 @@ one:
   data_inicio: 2024-08-11 15:55:47
   data_termino: 2024-08-11 15:55:47
   status: MyString
-  veiculo: one
+  veiculo_id: 1
 
 two:
   data_inicio: 2024-08-11 15:55:47
   data_termino: 2024-08-11 15:55:47
   status: MyString
-  veiculo: two
+  veiculo_id: 2

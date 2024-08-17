@@ -4,7 +4,6 @@ class CreateAtendimentos < ActiveRecord::Migration[7.2]
       t.datetime :data_inicio
       t.datetime :data_termino
       t.string :status
-      t.references :veiculo, null: false, foreign_key: true
 
       t.timestamps
     end

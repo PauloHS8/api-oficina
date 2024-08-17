@@ -3,7 +3,9 @@ class Funcionario < ApplicationRecord
 
   validates :matricula, presence: true
   validates :nome, presence: true, length: { minimum: 3 }
-  validates :cargo, :email, presence: true, length: { minimum: 5 }
+  validates :cargo, presence: true, length: { minimum: 5 }
+  validates :email, presence: true
   validates :salario, presence: true
-  validates :cpf, presence: true, length: { minimum: 11, maximum: 11}
+  validates :data_admissao, presence: true
+  validates :cpf, presence: true, length: { minimum: 11, maximum: 11 }
 end

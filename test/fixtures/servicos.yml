@@ -5,13 +5,9 @@ one:
   nome: MyString
   descricao: MyText
   preco: 9.99
-  veiculo: one
-  cliente: one
 
 two:
   codigo: MyString
   nome: MyString
   descricao: MyText
   preco: 9.99
-  veiculo: two
-  cliente: two

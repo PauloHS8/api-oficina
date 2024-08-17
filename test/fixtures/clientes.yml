@@ -1,6 +1,7 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  id: 1
   nome: MyString
   email: MyString
   telefone: MyString
@@ -8,6 +9,7 @@ one:
   endereco: MyString
 
 two:
+  id: 2
   nome: MyString
   email: MyString
   telefone: MyString

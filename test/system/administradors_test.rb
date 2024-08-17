@@ -12,32 +12,32 @@ class AdministradorsTest < ApplicationSystemTestCase
 
   test "should create administrador" do
     visit administradors_url
-    click_on "New administrador"
+    click_on "Novo administrador"
 
     fill_in "Email", with: @administrador.email
     fill_in "Senha", with: @administrador.senha
     click_on "Create Administrador"
 
-    assert_text "Administrador was successfully created"
+    assert_text "Administrador cadastrado com sucesso"
     click_on "Back"
   end
 
   test "should update Administrador" do
     visit administrador_url(@administrador)
-    click_on "Edit this administrador", match: :first
+    click_on "Editar administrador", match: :first
 
     fill_in "Email", with: @administrador.email
     fill_in "Senha", with: @administrador.senha
     click_on "Update Administrador"
 
-    assert_text "Administrador was successfully updated"
+    assert_text "Administrador editado com sucesso"
     click_on "Back"
   end
 
   test "should destroy Administrador" do
     visit administrador_url(@administrador)
-    click_on "Destroy this administrador", match: :first
+    click_on "Excluir administrador", match: :first
 
-    assert_text "Administrador was successfully destroyed"
+    assert_text "Administrador excluído com sucesso"
   end
 end

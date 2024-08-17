@@ -12,7 +12,7 @@ class AtendimentosTest < ApplicationSystemTestCase
 
   test "should create atendimento" do
     visit atendimentos_url
-    click_on "New atendimento"
+    click_on "Novo atendimento"
 
     fill_in "Data inicio", with: @atendimento.data_inicio
     fill_in "Data termino", with: @atendimento.data_termino
@@ -20,13 +20,13 @@ class AtendimentosTest < ApplicationSystemTestCase
     fill_in "Veiculo", with: @atendimento.veiculo_id
     click_on "Create Atendimento"
 
-    assert_text "Atendimento was successfully created"
+    assert_text "Atendimento cadastrado com sucesso"
     click_on "Back"
   end
 
   test "should update Atendimento" do
     visit atendimento_url(@atendimento)
-    click_on "Edit this atendimento", match: :first
+    click_on "Editar atendimento", match: :first
 
     fill_in "Data inicio", with: @atendimento.data_inicio.to_s
     fill_in "Data termino", with: @atendimento.data_termino.to_s
@@ -34,14 +34,14 @@ class AtendimentosTest < ApplicationSystemTestCase
     fill_in "Veiculo", with: @atendimento.veiculo_id
     click_on "Update Atendimento"
 
-    assert_text "Atendimento was successfully updated"
+    assert_text "Atendimento editado com sucesso"
     click_on "Back"
   end
 
   test "should destroy Atendimento" do
     visit atendimento_url(@atendimento)
-    click_on "Destroy this atendimento", match: :first
+    click_on "Excluir atendimento", match: :first
 
-    assert_text "Atendimento was successfully destroyed"
+    assert_text "Atendimento excluído com sucesso"
   end
 end

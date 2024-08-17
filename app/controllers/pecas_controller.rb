@@ -25,7 +25,7 @@ class PecasController < ApplicationController
 
     respond_to do |format|
       if @peca.save
-        format.html { redirect_to peca_url(@peca), notice: "Peca was successfully created." }
+        format.html { redirect_to peca_url(@peca), notice: "Peça cadastrada com sucesso." }
         format.json { render :show, status: :created, location: @peca }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +38,7 @@ class PecasController < ApplicationController
   def update
     respond_to do |format|
       if @peca.update(peca_params)
-        format.html { redirect_to peca_url(@peca), notice: "Peca was successfully updated." }
+        format.html { redirect_to peca_url(@peca), notice: "Peça atualizada com sucesso." }
         format.json { render :show, status: :ok, location: @peca }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,7 +52,7 @@ class PecasController < ApplicationController
     @peca.destroy!
 
     respond_to do |format|
-      format.html { redirect_to pecas_url, notice: "Peca was successfully destroyed." }
+      format.html { redirect_to pecas_url, notice: "Peça excluída com sucesso." }
       format.json { head :no_content }
     end
   end

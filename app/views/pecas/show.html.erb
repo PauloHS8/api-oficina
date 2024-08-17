@@ -3,8 +3,8 @@
 <%= render @peca %>
 
 <div>
-  <%= link_to "Edit this peca", edit_peca_path(@peca) %> |
-  <%= link_to "Back to pecas", pecas_path %>
+  <%= link_to "Editar peça", edit_peca_path(@peca) %> |
+  <%= link_to "Voltar para peças", pecas_path %>
 
-  <%= button_to "Destroy this peca", @peca, method: :delete %>
+  <%= button_to "Excluir peça", @peca, method: :delete %>
 </div>

@@ -12,40 +12,36 @@ class ServicosTest < ApplicationSystemTestCase
 
   test "should create servico" do
     visit servicos_url
-    click_on "New servico"
+    click_on "Novo servico"
 
-    fill_in "Cliente", with: @servico.cliente_id
     fill_in "Codigo", with: @servico.codigo
     fill_in "Descricao", with: @servico.descricao
     fill_in "Nome", with: @servico.nome
     fill_in "Preco", with: @servico.preco
-    fill_in "Veiculo", with: @servico.veiculo_id
     click_on "Create Servico"
 
-    assert_text "Servico was successfully created"
+    assert_text "Servico cadastrado com sucesso"
     click_on "Back"
   end
 
   test "should update Servico" do
     visit servico_url(@servico)
-    click_on "Edit this servico", match: :first
+    click_on "Editar servico", match: :first
 
-    fill_in "Cliente", with: @servico.cliente_id
     fill_in "Codigo", with: @servico.codigo
     fill_in "Descricao", with: @servico.descricao
     fill_in "Nome", with: @servico.nome
     fill_in "Preco", with: @servico.preco
-    fill_in "Veiculo", with: @servico.veiculo_id
     click_on "Update Servico"
 
-    assert_text "Servico was successfully updated"
+    assert_text "Servico editado com sucesso"
     click_on "Back"
   end
 
   test "should destroy Servico" do
     visit servico_url(@servico)
-    click_on "Destroy this servico", match: :first
+    click_on "Excluir servico", match: :first
 
-    assert_text "Servico was successfully destroyed"
+    assert_text "Servico excluído com sucesso"
   end
 end

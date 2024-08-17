@@ -25,7 +25,7 @@ class AdministradorsController < ApplicationController
 
     respond_to do |format|
       if @administrador.save
-        format.html { redirect_to administrador_url(@administrador), notice: "Administrador was successfully created." }
+        format.html { redirect_to administrador_url(@administrador), notice: "Administrador criado com sucesso." }
         format.json { render :show, status: :created, location: @administrador }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +38,7 @@ class AdministradorsController < ApplicationController
   def update
     respond_to do |format|
       if @administrador.update(administrador_params)
-        format.html { redirect_to administrador_url(@administrador), notice: "Administrador was successfully updated." }
+        format.html { redirect_to administrador_url(@administrador), notice: "Administrador editado com sucesso." }
         format.json { render :show, status: :ok, location: @administrador }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,7 +52,7 @@ class AdministradorsController < ApplicationController
     @administrador.destroy!
 
     respond_to do |format|
-      format.html { redirect_to administradors_url, notice: "Administrador was successfully destroyed." }
+      format.html { redirect_to administradors_url, notice: "Administrador excluído com sucesso." }
       format.json { head :no_content }
     end
   end
@@ -60,7 +60,7 @@ class AdministradorsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_administrador
-      @administrador = current_user.administradores.find(params[:id])
+      @administrador = Administrador.find(params[:id])
     rescue ActiveRecord::RecordNotFound
       # Handle the case where the record is not found or not authorized
       redirect_to root_path, alert: 'Você não tem permissão para acessar este administrador.'

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_08_17_180337) do
+ActiveRecord::Schema[7.2].define(version: 2024_08_17_225047) do
   create_table "administradors", force: :cascade do |t|
     t.string "email"
     t.string "senha"
@@ -22,9 +22,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_17_180337) do
     t.datetime "data_inicio"
     t.datetime "data_termino"
     t.string "status"
-    t.integer "veiculo_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "veiculo_id", null: false
     t.index ["veiculo_id"], name: "index_atendimentos_on_veiculo_id"
   end
 
@@ -33,13 +33,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_17_180337) do
     t.integer "funcionario_id", null: false
     t.index ["atendimento_id"], name: "index_atendimentos_funcionarios_on_atendimento_id"
     t.index ["funcionario_id"], name: "index_atendimentos_funcionarios_on_funcionario_id"
-  end
-
-  create_table "atendimentos_servicos", id: false, force: :cascade do |t|
-    t.integer "atendimento_id", null: false
-    t.integer "servico_id", null: false
-    t.index ["atendimento_id", "servico_id"], name: "index_atendimentos_servicos_on_atendimento_id_and_servico_id"
-    t.index ["servico_id", "atendimento_id"], name: "index_atendimentos_servicos_on_servico_id_and_atendimento_id"
   end
 
   create_table "clientes", force: :cascade do |t|
@@ -96,6 +89,15 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_17_180337) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "testes", force: :cascade do |t|
+    t.string "nome"
+    t.text "texto"
+    t.integer "administrador_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["administrador_id"], name: "index_testes_on_administrador_id"
+  end
+
   create_table "veiculos", force: :cascade do |t|
     t.string "placa"
     t.string "modelo"
@@ -110,5 +112,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_17_180337) do
   end
 
   add_foreign_key "atendimentos", "veiculos"
+  add_foreign_key "testes", "administradors"
   add_foreign_key "veiculos", "clientes"
 end

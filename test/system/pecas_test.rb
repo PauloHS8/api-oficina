@@ -12,7 +12,7 @@ class PecasTest < ApplicationSystemTestCase
 
   test "should create peca" do
     visit pecas_url
-    click_on "New peca"
+    click_on "Nova peça"
 
     fill_in "Codigo", with: @peca.codigo
     fill_in "Data validade", with: @peca.data_validade
@@ -22,13 +22,13 @@ class PecasTest < ApplicationSystemTestCase
     fill_in "Tipo", with: @peca.tipo
     click_on "Create Peca"
 
-    assert_text "Peca was successfully created"
+    assert_text "Peça cadastrada com sucesso"
     click_on "Back"
   end
 
   test "should update Peca" do
     visit peca_url(@peca)
-    click_on "Edit this peca", match: :first
+    click_on "Editar peça", match: :first
 
     fill_in "Codigo", with: @peca.codigo
     fill_in "Data validade", with: @peca.data_validade
@@ -38,14 +38,14 @@ class PecasTest < ApplicationSystemTestCase
     fill_in "Tipo", with: @peca.tipo
     click_on "Update Peca"
 
-    assert_text "Peca was successfully updated"
+    assert_text "Peça atualizada com sucesso"
     click_on "Back"
   end
 
   test "should destroy Peca" do
     visit peca_url(@peca)
-    click_on "Destroy this peca", match: :first
+    click_on "Excluir peça", match: :first
 
-    assert_text "Peca was successfully destroyed"
+    assert_text "Peça excluída com sucesso"
   end
 end

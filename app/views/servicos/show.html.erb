@@ -3,8 +3,8 @@
 <%= render @servico %>
 
 <div>
-  <%= link_to "Edit this servico", edit_servico_path(@servico) %> |
-  <%= link_to "Back to servicos", servicos_path %>
+  <%= link_to "Editar servico", edit_servico_path(@servico) %> |
+  <%= link_to "Voltar para servicos", servicos_path %>
 
-  <%= button_to "Destroy this servico", @servico, method: :delete %>
+  <%= button_to "Excluir servico", @servico, method: :delete %>
 </div>

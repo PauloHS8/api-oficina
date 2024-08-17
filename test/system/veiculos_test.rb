@@ -12,7 +12,7 @@ class VeiculosTest < ApplicationSystemTestCase
 
   test "should create veiculo" do
     visit veiculos_url
-    click_on "New veiculo"
+    click_on "Novo veiculo"
 
     fill_in "Ano", with: @veiculo.ano
     fill_in "Chassi", with: @veiculo.chassi
@@ -22,13 +22,13 @@ class VeiculosTest < ApplicationSystemTestCase
     fill_in "Quilometragem", with: @veiculo.quilometragem
     click_on "Create Veiculo"
 
-    assert_text "Veiculo was successfully created"
+    assert_text "Veiculo cadastrado com sucesso"
     click_on "Back"
   end
 
   test "should update Veiculo" do
     visit veiculo_url(@veiculo)
-    click_on "Edit this veiculo", match: :first
+    click_on "Editar veiculo", match: :first
 
     fill_in "Ano", with: @veiculo.ano
     fill_in "Chassi", with: @veiculo.chassi
@@ -38,14 +38,14 @@ class VeiculosTest < ApplicationSystemTestCase
     fill_in "Quilometragem", with: @veiculo.quilometragem
     click_on "Update Veiculo"
 
-    assert_text "Veiculo was successfully updated"
+    assert_text "Veiculo editado com sucesso"
     click_on "Back"
   end
 
   test "should destroy Veiculo" do
     visit veiculo_url(@veiculo)
-    click_on "Destroy this veiculo", match: :first
+    click_on "Excluir veiculo", match: :first
 
-    assert_text "Veiculo was successfully destroyed"
+    assert_text "Veiculo excluído com sucesso"
   end
 end

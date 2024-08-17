@@ -25,7 +25,7 @@ class AtendimentosController < ApplicationController
     respond_to do |format|
       if @atendimento.save
         AtendimentoMailer.atendimento_criado(@atendimento).deliver_later
-        format.html { redirect_to atendimento_url(@atendimento), notice: "Atendimento was successfully created." }
+        format.html { redirect_to atendimento_url(@atendimento), notice: "Atendimento cadastrado com sucesso." }
         format.json { render :show, status: :created, location: @atendimento }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +38,7 @@ class AtendimentosController < ApplicationController
   def update
     respond_to do |format|
       if @atendimento.update(atendimento_params)
-        format.html { redirect_to atendimento_url(@atendimento), notice: "Atendimento was successfully updated." }
+        format.html { redirect_to atendimento_url(@atendimento), notice: "Atendimento editado com sucesso." }
         format.json { render :show, status: :ok, location: @atendimento }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,7 +52,7 @@ class AtendimentosController < ApplicationController
     @atendimento.destroy!
 
     respond_to do |format|
-      format.html { redirect_to atendimentos_url, notice: "Atendimento was successfully destroyed." }
+      format.html { redirect_to atendimentos_url, notice: "Atendimento excluído com sucesso." }
       format.json { head :no_content }
     end
   end

@@ -3,8 +3,8 @@
 <%= render @atendimento %>
 
 <div>
-  <%= link_to "Editar este atendimento", edit_atendimento_path(@atendimento) %> |
+  <%= link_to "Editar atendimento", edit_atendimento_path(@atendimento) %> |
   <%= link_to "Voltar para atendimentos", atendimentos_path %>
 
-  <%= button_to "Excluir este atendimento", @atendimento, method: :delete %>
+  <%= button_to "Excluir atendimento", @atendimento, method: :delete %>
 </div>

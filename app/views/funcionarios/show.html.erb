@@ -3,8 +3,8 @@
 <%= render @funcionario %>
 
 <div>
-  <%= link_to "Edit this funcionario", edit_funcionario_path(@funcionario) %> |
-  <%= link_to "Back to funcionarios", funcionarios_path %>
+  <%= link_to "Editar funcionario", edit_funcionario_path(@funcionario) %> |
+  <%= link_to "Voltar para funcionarios", funcionarios_path %>
 
-  <%= button_to "Destroy this funcionario", @funcionario, method: :delete %>
+  <%= button_to "Excluir funcionario", @funcionario, method: :delete %>
 </div>

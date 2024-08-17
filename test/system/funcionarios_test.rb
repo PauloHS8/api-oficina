@@ -12,7 +12,7 @@ class FuncionariosTest < ApplicationSystemTestCase
 
   test "should create funcionario" do
     visit funcionarios_url
-    click_on "New funcionario"
+    click_on "Novo funcionario"
 
     fill_in "Cargo", with: @funcionario.cargo
     fill_in "Cpf", with: @funcionario.cpf
@@ -23,13 +23,13 @@ class FuncionariosTest < ApplicationSystemTestCase
     fill_in "Salario", with: @funcionario.salario
     click_on "Create Funcionario"
 
-    assert_text "Funcionario was successfully created"
+    assert_text "Funcionario cadastrado com sucesso"
     click_on "Back"
   end
 
   test "should update Funcionario" do
     visit funcionario_url(@funcionario)
-    click_on "Edit this funcionario", match: :first
+    click_on "Editar funcionario", match: :first
 
     fill_in "Cargo", with: @funcionario.cargo
     fill_in "Cpf", with: @funcionario.cpf
@@ -40,14 +40,14 @@ class FuncionariosTest < ApplicationSystemTestCase
     fill_in "Salario", with: @funcionario.salario
     click_on "Update Funcionario"
 
-    assert_text "Funcionario was successfully updated"
+    assert_text "Funcionario editado com sucesso"
     click_on "Back"
   end
 
   test "should destroy Funcionario" do
     visit funcionario_url(@funcionario)
-    click_on "Destroy this funcionario", match: :first
+    click_on "Excluir funcionario", match: :first
 
-    assert_text "Funcionario was successfully destroyed"
+    assert_text "Funcionario excluído com sucesso"
   end
 end

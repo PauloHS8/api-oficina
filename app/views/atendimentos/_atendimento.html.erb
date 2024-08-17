@@ -23,4 +23,13 @@
     <strong>Veículo:</strong>
     <%= atendimento.veiculo.modelo %>
   </p>
+
+  <p>
+    <strong>Funcionários:</strong>
+  <ul>
+    <% atendimento.funcionarios.each do |funcionario| %>
+      <li><%= funcionario.nome %> - <%= funcionario.cargo %></li>
+    <% end %>
+  </ul>
+  </p>
 </div>

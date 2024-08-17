@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_08_11_190550) do
+ActiveRecord::Schema[7.2].define(version: 2024_08_17_180337) do
   create_table "administradors", force: :cascade do |t|
     t.string "email"
     t.string "senha"
@@ -26,6 +26,13 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_11_190550) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["veiculo_id"], name: "index_atendimentos_on_veiculo_id"
+  end
+
+  create_table "atendimentos_funcionarios", id: false, force: :cascade do |t|
+    t.integer "atendimento_id", null: false
+    t.integer "funcionario_id", null: false
+    t.index ["atendimento_id"], name: "index_atendimentos_funcionarios_on_atendimento_id"
+    t.index ["funcionario_id"], name: "index_atendimentos_funcionarios_on_funcionario_id"
   end
 
   create_table "atendimentos_servicos", id: false, force: :cascade do |t|

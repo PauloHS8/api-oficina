@@ -6,7 +6,7 @@
 <body>
 <h1>Atendimento registrado, <%= @atendimento.veiculo.cliente.nome %></h1>
 <p>
-  Agendado para iniciar às <%= @atendimento.data_inicio %> e previsão de finalizar às <%= @atendimento.data_termino %>.
+  Agendado para iniciar às <%= @atendimento.data_inicio.strftime('%d/%m/%Y %H:%M') %> e previsão de finalizar às <%= @atendimento.data_termino.strftime('%d/%m/%Y %H:%M') %>.
 </p>
 <p>
   Obrigado pela preferência!

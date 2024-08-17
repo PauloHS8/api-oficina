@@ -65,6 +65,6 @@ class AtendimentosController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def atendimento_params
-      params.require(:atendimento).permit(:data_inicio, :data_termino, :status, :veiculo_id)
+      params.require(:atendimento).permit(:data_inicio, :data_termino, :status, :veiculo_id, funcionario_ids: [])
     end
 end

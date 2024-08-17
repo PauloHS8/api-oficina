@@ -1,5 +1,5 @@
 class AtendimentoMailer < ActionMailer::Base
-  default from: "nao-responda@esmecanica.com"
+  default from: ENV['MAILER_USER_NAME']
 
   def atendimento_criado(atendimento)
     @atendimento = atendimento

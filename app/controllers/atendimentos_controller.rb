@@ -24,6 +24,7 @@ class AtendimentosController < ApplicationController
 
     respond_to do |format|
       if @atendimento.save
+        AtendimentoMailer.atendimento_criado(@atendimento).deliver_later
         format.html { redirect_to atendimento_url(@atendimento), notice: "Atendimento was successfully created." }
         format.json { render :show, status: :created, location: @atendimento }
       else
@@ -59,11 +60,11 @@ class AtendimentosController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_atendimento
-      @atendimento = Atendimento.find(params[:id])
+      @atendimento = Atendimento.includes(veiculo: :cliente).find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def atendimento_params
-      params.require(:atendimento).permit(:data_inicio, :data_termino, :status, :veiculo_id)
+      params.require(:atendimento).permit(:data_inicio, :data_termino, :status, :veiculo_id, funcionario_ids: [])
     end
 end

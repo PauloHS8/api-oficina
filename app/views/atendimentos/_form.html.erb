@@ -33,7 +33,16 @@
 
   <div>
     <%= form.label :status, style: "display: block" %>
-    <%= form.text_field :status %>
+    <%= form.select :status, options_for_select([['Agendado', 'agendado'], ['Em andamento', 'andamento'], ['Concluído', 'concluido'], ['Cancelado', 'cancelado']], atendimento.status) %>
+  </div>
+
+  <div>
+    <%= form.label :funcionarios, "Funcionários", style: "display: block" %>
+    <%= form.collection_check_boxes :funcionario_ids, Funcionario.all, :id, :nome do |cb| %>
+      <div>
+        <%= cb.label { cb.check_box + cb.text } %>
+      </div>
+    <% end %>
   </div>
 
   <div>
@@ -49,16 +58,12 @@
         clienteSelect.addEventListener("change", (event) => {
             const clienteId = event.target.value;
 
-            console.log(clienteId)
-
             if (clienteId) {
                 fetch(`/clientes/${clienteId}/veiculos`)
                     .then(response => response.json())
                     .then(veiculos => {
-                        console.log(veiculos)
                         veiculoSelect.innerHTML = '<option value="">Selecione um veículo</option>';
                         veiculos.forEach(veiculo => {
-                            console.log(veiculo)
                             const option = document.createElement("option");
                             option.value = veiculo.id;
                             option.textContent = `${veiculo.placa} - ${veiculo.modelo}`;
@@ -70,5 +75,4 @@
             }
         });
     });
-
 </script>

@@ -1,11 +1,11 @@
-<div id="<%= dom_id atendimento %>">
+<div id="<%= dom_id(atendimento) %>">
   <p>
-    <strong>Data inicio:</strong>
+    <strong>Data início:</strong>
     <%= atendimento.data_inicio %>
   </p>
 
   <p>
-    <strong>Data termino:</strong>
+    <strong>Data término:</strong>
     <%= atendimento.data_termino %>
   </p>
 
@@ -15,8 +15,21 @@
   </p>
 
   <p>
-    <strong>Veiculo:</strong>
-    <%= atendimento.veiculo_id %>
+    <strong>Cliente:</strong>
+    <%= atendimento.veiculo.cliente.nome %>
   </p>
 
+  <p>
+    <strong>Veículo:</strong>
+    <%= atendimento.veiculo.modelo %>
+  </p>
+
+  <p>
+    <strong>Funcionários:</strong>
+  <ul>
+    <% atendimento.funcionarios.each do |funcionario| %>
+      <li><%= funcionario.nome %> - <%= funcionario.cargo %></li>
+    <% end %>
+  </ul>
+  </p>
 </div>

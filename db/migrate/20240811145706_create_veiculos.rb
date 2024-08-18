@@ -5,7 +5,7 @@ class CreateVeiculos < ActiveRecord::Migration[7.2]
       t.string :modelo
       t.integer :ano
       t.string :cor
-      t.integer :quilometragem
+      t.float :quilometragem
       t.string :chassi
 
       t.timestamps

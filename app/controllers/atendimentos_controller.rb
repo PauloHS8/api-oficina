@@ -61,6 +61,8 @@ class AtendimentosController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_atendimento
       @atendimento = Atendimento.includes(veiculo: :cliente).find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to atendimentos_path, notice: "Atendimento não encontrado."
     end
 
     # Only allow a list of trusted parameters through.

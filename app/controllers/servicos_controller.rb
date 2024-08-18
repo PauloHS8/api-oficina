@@ -61,6 +61,8 @@ class ServicosController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_servico
       @servico = Servico.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to servicos_path, notice: "Serviço não encontrado."
     end
 
     # Only allow a list of trusted parameters through.

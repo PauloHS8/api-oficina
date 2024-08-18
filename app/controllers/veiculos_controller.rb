@@ -61,6 +61,8 @@ class VeiculosController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_veiculo
       @veiculo = Veiculo.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to veiculos_path, notice: "Veículo não encontrado."
     end
 
     # Only allow a list of trusted parameters through.

@@ -1,8 +1,9 @@
 class Cliente < ApplicationRecord
-  has_many :veiculos
+  has_many :veiculos, dependent: :destroy
 
-  validates :nome, presence: true, length: { in: 2..100 }
+  validates :nome, presence: true, length: { in: 3..80 }
   validates :email, presence: true, uniqueness: { case_sensitive: false }
-  validates :telefone, :cpf, presence: true, length: { minimum: 11, maximum: 11 }
-  validates :endereco, presence: true, length: { minimum: 5, maximum: 50 }
+  validates :telefone, presence: true, length: { minimum: 11, maximum: 11 }
+  validates :cpf, presence: true, uniqueness: true, length: { minimum: 11, maximum: 11 }
+  validates :endereco, presence: true, length: { in: 3..80 }
 end

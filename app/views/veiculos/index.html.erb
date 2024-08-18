@@ -4,6 +4,8 @@
 
 <h1>Veículos</h1>
 
+<%= link_to "Novo veículo", new_veiculo_path %>
+
 <div id="veiculos">
   <% @veiculos.each do |veiculo| %>
     <%= render veiculo %>
@@ -13,4 +15,3 @@
   <% end %>
 </div>
 
-<%= link_to "Novo veículo", new_veiculo_path %>

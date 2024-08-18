@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :testes
   resources :atendimentos
   resources :estoques
   resources :servicos
@@ -10,7 +9,7 @@ Rails.application.routes.draw do
   resources :administradors
 
   resources :clientes do
-    get 'veiculos', on: :member
+    get :veiculos, on: :member
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

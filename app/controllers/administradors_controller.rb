@@ -63,7 +63,7 @@ class AdministradorsController < ApplicationController
       @administrador = Administrador.find(params[:id])
     rescue ActiveRecord::RecordNotFound
       # Handle the case where the record is not found or not authorized
-      redirect_to root_path, alert: 'Você não tem permissão para acessar este administrador.'
+      redirect_to administradors_path, notice: "Administrador não encontrado."
     end
 
     # Only allow a list of trusted parameters through.

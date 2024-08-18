@@ -1,5 +1,5 @@
 class ClientesController < ApplicationController
-  before_action :set_cliente, only: %i[ show edit update destroy ]
+  before_action :set_cliente, only: %i[ show edit update destroy veiculos ]
 
   # GET /clientes or /clientes.json
   def index
@@ -58,14 +58,15 @@ class ClientesController < ApplicationController
   end
 
   def veiculos
-    cliente = Cliente.find(params[:id])
-    render json: cliente.veiculos.select(:id, :modelo, :placa)
+    render json: @cliente.veiculos.select(:id, :modelo, :placa)
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_cliente
       @cliente = Cliente.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to clientes_path, notice: "Cliente não encontrado."
     end
 
     # Only allow a list of trusted parameters through.

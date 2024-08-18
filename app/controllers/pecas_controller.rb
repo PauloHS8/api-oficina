@@ -61,6 +61,8 @@ class PecasController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_peca
       @peca = Peca.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to pecas_path, notice: "Peça não encontrada."
     end
 
     # Only allow a list of trusted parameters through.

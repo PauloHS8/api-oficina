@@ -1,5 +1,6 @@
 class Veiculo < ApplicationRecord
   belongs_to :cliente
+  has_many :atendimentos, dependent: :destroy
 
   validates :placa, uniqueness: true, presence: true, length: { minimum: 7, maximum: 10 }
   validates :modelo, presence: true, length: { minimum: 3, maximum: 30 }

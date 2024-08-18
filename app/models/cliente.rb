@@ -1,5 +1,5 @@
 class Cliente < ApplicationRecord
-  has_many :veiculos
+  has_many :veiculos, dependent: :destroy
 
   validates :nome, presence: true, length: { in: 2..100 }
   validates :email, presence: true, uniqueness: { case_sensitive: false }

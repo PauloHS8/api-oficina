@@ -60,11 +60,11 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_17_220636) do
   create_table "funcionarios", force: :cascade do |t|
     t.string "matricula"
     t.string "nome"
+    t.string "cpf"
     t.string "cargo"
     t.string "email"
     t.decimal "salario"
     t.date "data_admissao"
-    t.string "cpf"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -103,5 +103,5 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_17_220636) do
   end
 
   add_foreign_key "atendimentos", "veiculos"
-  add_foreign_key "veiculos", "clientes"
+  add_foreign_key "veiculos", "clientes", on_delete: :cascade
 end

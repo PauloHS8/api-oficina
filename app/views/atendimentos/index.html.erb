@@ -2,15 +2,36 @@
 
 <% content_for :title, "Atendimentos" %>
 
-<h1>Atendimentos</h1>
-
-<%= link_to "Novo atendimento", new_atendimento_path %>
-
-<div id="atendimentos">
-  <% @atendimentos.each do |atendimento| %>
-    <%= render atendimento %>
-    <p>
-      <%= link_to "Exibir atendimento", atendimento %>
-    </p>
-  <% end %>
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1>Atendimentos</h1>
+  <%= link_to "Novo atendimento", new_atendimento_path, class: "btn btn-primary" %>
 </div>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Veículo</th>
+      <th>Data de Início</th>
+      <th>Data de Término</th>
+      <th>Status</th>
+      <th colspan="3">Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @atendimentos.each do |atendimento| %>
+      <tr>
+        <td><%= atendimento.id %></td>
+        <td><%= atendimento.veiculo.modelo %> - <%= atendimento.veiculo.cliente.nome %></td>
+        <td><%= atendimento.data_inicio.strftime("%d/%m/%Y") %></td>
+        <td><%= atendimento.data_termino&.strftime("%d/%m/%Y") %></td>
+        <td><%= atendimento.status %></td>
+        <td><%= link_to "Exibir", atendimento, class: "btn btn-info btn-sm" %></td>
+        <td><%= link_to "Editar", edit_atendimento_path(atendimento), class: "btn btn-warning btn-sm" %></td>
+        <td>
+          <%= link_to "Excluir", atendimento, method: :delete, data: { confirm: "Tem certeza que deseja excluir este atendimento?" }, class: "btn btn-danger btn-sm" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

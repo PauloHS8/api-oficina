@@ -1,8 +1,7 @@
 <%= form_with(model: veiculo, local: true) do |form| %>
   <% if veiculo.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(veiculo.errors.count, "erro") %> <%= "encontrado".pluralize(veiculo.errors.count) %>:</h2>
-
+    <div class="alert alert-danger">
+      <h4><%= pluralize(veiculo.errors.count, "erro") %> <%= "encontrado".pluralize(veiculo.errors.count) %>:</h4>
       <ul>
         <% veiculo.errors.full_messages.each do |message| %>
           <li><%= message %></li>
@@ -11,42 +10,42 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :placa %>
-    <%= form.text_field :placa %>
+  <div class="mb-3">
+    <%= form.label :placa, class: "form-label" %>
+    <%= form.text_field :placa, class: "form-control" %>
   </div>
 
-  <div class="field">
-    <%= form.label :modelo %>
-    <%= form.text_field :modelo %>
+  <div class="mb-3">
+    <%= form.label :modelo, class: "form-label" %>
+    <%= form.text_field :modelo, class: "form-control" %>
   </div>
 
-  <div class="field">
-    <%= form.label :ano %>
-    <%= form.number_field :ano %>
+  <div class="mb-3">
+    <%= form.label :ano, class: "form-label" %>
+    <%= form.number_field :ano, class: "form-control" %>
   </div>
 
-  <div class="field">
-    <%= form.label :cor %>
-    <%= form.text_field :cor %>
+  <div class="mb-3">
+    <%= form.label :cor, class: "form-label" %>
+    <%= form.text_field :cor, class: "form-control" %>
   </div>
 
-  <div class="field">
-    <%= form.label :quilometragem %>
-    <%= form.text_field :quilometragem %>
+  <div class="mb-3">
+    <%= form.label :quilometragem, class: "form-label" %>
+    <%= form.text_field :quilometragem, class: "form-control" %>
   </div>
 
-  <div class="field">
-    <%= form.label :chassi %>
-    <%= form.text_field :chassi %>
+  <div class="mb-3">
+    <%= form.label :chassi, class: "form-label" %>
+    <%= form.text_field :chassi, class: "form-control" %>
   </div>
 
-  <div class="field">
-    <%= form.label :cliente_id, "Cliente" %>
-    <%= form.collection_select :cliente_id, Cliente.all, :id, :nome, prompt: "Selecione um cliente" %>
+  <div class="mb-3">
+    <%= form.label :cliente_id, "Cliente", class: "form-label" %>
+    <%= form.collection_select :cliente_id, Cliente.all, :id, :nome, { prompt: "Selecione um cliente" }, { class: "form-select" } %>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
+  <div class="text-end mt-3">
+    <%= form.submit "Salvar", class: "btn btn-primary" %>
   </div>
 <% end %>

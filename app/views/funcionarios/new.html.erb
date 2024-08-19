@@ -1,11 +1,17 @@
-<% content_for :title, "Novo funcionário" %>
+<% content_for :title, "Novo funcionario" %>
 
-<h1>Novo funcionário</h1>
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <div class="d-flex align-items-center mb-4">
+        <%= link_to "Voltar ", funcionarios_path, class: "btn btn-secondary me-3" %>
+        <div class="flex-grow-1 text-center">
+          <h1>Novo funcionario</h1>
+        </div>
+        <div class="fixed-size-div"></div>
+      </div>
 
-<%= render "form", funcionario: @funcionario %>
-
-<br>
-
-<div>
-  <%= link_to "Voltar para funcionários", funcionarios_path %>
+      <%= render "form", funcionario: @funcionario %>
+    </div>
+  </div>
 </div>

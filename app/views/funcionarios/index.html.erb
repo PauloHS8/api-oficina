@@ -1,16 +1,41 @@
-<p style="color: green"><%= notice %></p>
+<p class="text-success"><%= notice %></p>
 
 <% content_for :title, "Funcionários" %>
 
-<h1>Funcionários</h1>
-
-<%= link_to "Novo funcionário", new_funcionario_path %>
-
-<div id="funcionarios">
-  <% @funcionarios.each do |funcionario| %>
-    <%= render funcionario %>
-    <p>
-      <%= link_to "Exibir funcionário", funcionario %>
-    </p>
-  <% end %>
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1>Funcionários</h1>
+  <%= link_to "Novo funcionário", new_funcionario_path, class: "btn btn-primary" %>
 </div>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nome</th>
+      <th>Email</th>
+      <th>CPF</th>
+      <th>Cargo</th>
+      <th>Salário</th>
+      <th>Data de Admissão</th>
+      <th colspan="3">Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @funcionarios.each do |funcionario| %>
+      <tr>
+        <td><%= funcionario.id %></td>
+        <td><%= funcionario.nome %></td>
+        <td><%= funcionario.email %></td>
+        <td><%= funcionario.cpf %></td>
+        <td><%= funcionario.cargo %></td>
+        <td><%= number_to_currency(funcionario.salario, locale: 'pt-BR') %></td>
+        <td><%= funcionario.data_admissao.strftime("%d/%m/%Y") %></td>
+        <td><%= link_to "Exibir", funcionario, class: "btn btn-info btn-sm" %></td>
+        <td><%= link_to "Editar", edit_funcionario_path(funcionario), class: "btn btn-warning btn-sm" %></td>
+        <td>
+          <%= link_to "Excluir", funcionario, method: :delete, data: { confirm: "Tem certeza que deseja excluir este funcionário?" }, class: "btn btn-danger btn-sm" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

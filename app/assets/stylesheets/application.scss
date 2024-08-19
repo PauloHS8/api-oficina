@@ -13,3 +13,11 @@
  *= require_tree .
  *= require_self
  */
+
+@import 'bootstrap';
+
+.fixed-size-div {
+  width: 100px;
+  height: 1px;
+  visibility: hidden;
+}

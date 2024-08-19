@@ -1,11 +1,17 @@
-<% content_for :title, "Novo atendimento" %>
+<% content_for :title, "Editar atendimento" %>
 
-<h1>Novo atendimento</h1>
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <div class="d-flex align-items-center mb-4">
+        <%= link_to "Voltar ", atendimentos_path, class: "btn btn-secondary me-3" %>
+        <div class="flex-grow-1 text-center">
+          <h1>Novo atendimento</h1>
+        </div>
+        <div class="fixed-size-div"></div>
+      </div>
 
-<%= render "form", atendimento: @atendimento %>
-
-<br>
-
-<div>
-  <%= link_to "Voltar para atendimentos", atendimentos_path %>
+      <%= render "form", atendimento: @atendimento %>
+    </div>
+  </div>
 </div>

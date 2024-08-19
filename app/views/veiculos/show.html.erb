@@ -1,10 +1,23 @@
-<p style="color: green"><%= notice %></p>
+<%= content_for :title, "Detalhes do veiculo" %>
 
-<%= render @veiculo %>
+<div class="container mt-4">
+  <% if notice %>
+    <div class="alert alert-success">
+      <%= notice %>
+    </div>
+  <% end %>
 
-<div>
-  <%= link_to "Editar veiculo", edit_veiculo_path(@veiculo) %> |
-  <%= link_to "Voltar para veiculos", veiculos_path %>
+  <div class="mb-4">
+    <%= render @veiculo %>
+  </div>
 
-  <%= button_to "Excluir veiculo", @veiculo, method: :delete %>
+  <div class="d-flex justify-content-between">
+    <div>
+      <%= link_to "Voltar para veículos", veiculos_path, class: "btn btn-secondary" %>
+    </div>
+    <div class="d-flex">
+      <%= link_to "Editar veículo", edit_veiculo_path(@veiculo), class: "btn btn-warning me-2" %>
+      <%= button_to "Excluir veículo", @veiculo, method: :delete, data: { confirm: "Tem certeza de que deseja excluir este veículo?" }, class: "btn btn-danger" %>
+    </div>
+  </div>
 </div>

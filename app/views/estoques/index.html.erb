@@ -2,15 +2,32 @@
 
 <% content_for :title, "Estoques" %>
 
-<h1>Estoques</h1>
-
-<%= link_to "Novo estoque", new_estoque_path %>
-
-<div id="estoques">
-  <% @estoques.each do |estoque| %>
-    <%= render estoque %>
-    <p>
-      <%= link_to "Exibir estoque", estoque %>
-    </p>
-  <% end %>
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1>Estoques</h1>
+  <%= link_to "Novo estoque", new_estoque_path, class: "btn btn-primary" %>
 </div>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Código</th>
+      <th>Quantidade</th>
+      <th colspan="3">Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @estoques.each do |estoque| %>
+      <tr>
+        <td><%= estoque.id %></td>
+        <td><%= estoque.codigo %></td>
+        <td><%= estoque.quantidade %></td>
+        <td><%= link_to "Exibir", estoque, class: "btn btn-info btn-sm" %></td>
+        <td><%= link_to "Editar", edit_estoque_path(estoque), class: "btn btn-warning btn-sm" %></td>
+        <td>
+          <%= link_to "Excluir", estoque, method: :delete, data: { confirm: "Tem certeza que deseja excluir este estoque?" }, class: "btn btn-danger btn-sm" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

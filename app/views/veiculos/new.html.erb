@@ -1,11 +1,18 @@
-<% content_for :title, "Novo veiculo" %>
+<% content_for :title, "Novo Veículo" %>
 
-<h1>Novo veiculo</h1>
-
-<%= render "form", veiculo: @veiculo %>
-
-<br>
-
-<div>
-  <%= link_to "Voltar para veiculos", veiculos_path %>
+<div class="container">
+  <div class="row justify-content-center mb-4">
+    <div class="col-md-8">
+        <div class="d-flex align-items-center mb-4">
+        <%= link_to "Voltar ", veiculos_path, class: "btn btn-secondary me-3" %>
+        <div class="flex-grow-1 text-center">
+          <h1>Novo Veículo</h1>
+        </div>
+        <div class="fixed-size-div"></div>
+      </div>
+      
+      <%= render "form", veiculo: @veiculo %>
+      
+    </div>
+  </div>
 </div>

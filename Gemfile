@@ -61,6 +61,13 @@ group :test do
   gem "selenium-webdriver"
 end
 
+group :development, :test do
+  gem 'rspec-rails'
+  gem 'capybara'
+  gem 'factory_bot_rails'
+end
+
+
 group :actions do
   gem 'pg'
   gem 'activerecord-postgresql-adapter'

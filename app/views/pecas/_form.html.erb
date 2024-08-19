@@ -1,47 +1,46 @@
-<%= form_with(model: peca) do |form| %>
+<%= form_with(model: peca, local: true) do |form| %>
   <% if peca.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(peca.errors.count, "erro") %> <%= "encontrado".pluralize(peca.errors.count) %>:</h2>
-
+    <div class="alert alert-danger">
+      <h4><%= pluralize(peca.errors.count, "erro") %> <%= "encontrado".pluralize(peca.errors.count) %>:</h4>
       <ul>
-        <% peca.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+        <% peca.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :codigo, style: "display: block" %>
-    <%= form.text_field :codigo %>
+  <div class="mb-3">
+    <%= form.label :codigo, "Código", class: "form-label" %>
+    <%= form.text_field :codigo, class: "form-control" %>
   </div>
 
-  <div>
-    <%= form.label :nome, style: "display: block" %>
-    <%= form.text_field :nome %>
+  <div class="mb-3">
+    <%= form.label :nome, "Nome", class: "form-label" %>
+    <%= form.text_field :nome, class: "form-control" %>
   </div>
 
-  <div>
-    <%= form.label :preco, style: "display: block" %>
-    <%= form.text_field :preco %>
+  <div class="mb-3">
+    <%= form.label :preco, "Preço", class: "form-label" %>
+    <%= form.text_field :preco, class: "form-control" %>
   </div>
 
-  <div>
-    <%= form.label :tipo, style: "display: block" %>
-    <%= form.text_field :tipo %>
+  <div class="mb-3">
+    <%= form.label :tipo, "Tipo", class: "form-label" %>
+    <%= form.text_field :tipo, class: "form-control" %>
   </div>
 
-  <div>
-    <%= form.label :fabricante, style: "display: block" %>
-    <%= form.text_field :fabricante %>
+  <div class="mb-3">
+    <%= form.label :fabricante, "Fabricante", class: "form-label" %>
+    <%= form.text_field :fabricante, class: "form-control" %>
   </div>
 
-  <div>
-    <%= form.label :data_validade, style: "display: block" %>
-    <%= form.date_field :data_validade %>
+  <div class="mb-3">
+    <%= form.label :data_validade, "Data de Validade", class: "form-label" %>
+    <%= form.date_field :data_validade, class: "form-control" %>
   </div>
 
-  <div>
-    <%= form.submit %>
+  <div class="text-center">
+    <%= form.submit "Salvar", class: "btn btn-primary" %>
   </div>
 <% end %>

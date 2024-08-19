@@ -1,10 +1,23 @@
-<p style="color: green"><%= notice %></p>
+<%= content_for :title, "Detalhes do serviço" %>
 
-<%= render @servico %>
+<div class="container mt-4">
+  <% if notice %>
+    <div class="alert alert-success">
+      <%= notice %>
+    </div>
+  <% end %>
 
-<div>
-  <%= link_to "Editar servico", edit_servico_path(@servico) %> |
-  <%= link_to "Voltar para servicos", servicos_path %>
+  <div class="mb-4">
+    <%= render @servico %>
+  </div>
 
-  <%= button_to "Excluir servico", @servico, method: :delete %>
+  <div class="d-flex justify-content-between">
+    <div>
+      <%= link_to "Voltar para serviços", servicos_path, class: "btn btn-secondary" %>
+    </div>
+    <div class="d-flex">
+      <%= link_to "Editar serviço", edit_servico_path(@servico), class: "btn btn-warning me-2" %>
+      <%= button_to "Excluir serviço", @servico, method: :delete, data: { confirm: "Tem certeza de que deseja excluir este servico?" }, class: "btn btn-danger" %>
+    </div>
+  </div>
 </div>

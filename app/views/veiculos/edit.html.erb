@@ -1,12 +1,17 @@
-<% content_for :title, "Editar veiculo" %>
+<% content_for :title, "Editar Cliente" %>
 
-<h1>Editar veiculo</h1>
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <div class="d-flex align-items-center mb-4">
+        <%= link_to "Voltar ", veiculos_path, class: "btn btn-secondary me-3" %>
+        <div class="flex-grow-1 text-center">
+          <h1>Editar Veículo</h1>
+        </div>
+        <div class="fixed-size-div"></div>
+      </div>
 
-<%= render "form", veiculo: @veiculo %>
-
-<br>
-
-<div>
-  <%= link_to "Exibir veiculo", @veiculo %> |
-  <%= link_to "Voltar para veiculos", veiculos_path %>
+      <%= render "form", veiculo: @veiculo %>
+    </div>
+  </div>
 </div>

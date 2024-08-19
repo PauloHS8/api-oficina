@@ -1,42 +1,41 @@
-<%= form_with(model: cliente) do |form| %>
+<%= form_with(model: cliente, local: true, html: { class: "form-container" }) do |form| %>
   <% if cliente.errors.any? %>
-    <div style="color: red">
+    <div class="alert alert-danger">
       <h2><%= pluralize(cliente.errors.count, "erro") %> <%= "encontrado".pluralize(cliente.errors.count) %>:</h2>
-
       <ul>
-        <% cliente.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+        <% cliente.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :nome, style: "display: block" %>
-    <%= form.text_field :nome %>
+  <div class="form-group mb-3">
+    <%= form.label :nome, class: "form-label" %>
+    <%= form.text_field :nome, class: "form-control rounded-input" %>
   </div>
 
-  <div>
-    <%= form.label :email, style: "display: block" %>
-    <%= form.email_field :email %>
+  <div class="form-group mb-3">
+    <%= form.label :email, class: "form-label" %>
+    <%= form.email_field :email, class: "form-control rounded-input" %>
   </div>
 
-  <div>
-    <%= form.label :telefone, style: "display: block" %>
-    <%= form.telephone_field  :telefone %>
+  <div class="form-group mb-3">
+    <%= form.label :telefone, class: "form-label" %>
+    <%= form.telephone_field :telefone, class: "form-control rounded-input" %>
   </div>
 
-  <div>
-    <%= form.label :cpf, style: "display: block" %>
-    <%= form.text_field :cpf %>
+  <div class="form-group mb-3">
+    <%= form.label :cpf, class: "form-label" %>
+    <%= form.text_field :cpf, class: "form-control rounded-input" %>
   </div>
 
-  <div>
-    <%= form.label :endereco, style: "display: block" %>
-    <%= form.text_field :endereco %>
+  <div class="form-group mb-3">
+    <%= form.label :endereco, class: "form-label" %>
+    <%= form.text_area :endereco, class: "form-control rounded-input" %>
   </div>
 
-  <div>
-    <%= form.submit %>
+  <div class="text-center">
+    <%= form.submit "Salvar", class: "btn btn-primary" %>
   </div>
 <% end %>

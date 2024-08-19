@@ -1,52 +1,51 @@
-<%= form_with(model: funcionario) do |form| %>
+<%= form_with(model: funcionario, local: true) do |form| %>
   <% if funcionario.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(funcionario.errors.count, "erro") %> <%= "encontrado".pluralize(funcionario.errors.count) %>:</h2>
-
+    <div class="alert alert-danger">
+      <h4><%= pluralize(funcionario.errors.count, "erro") %> <%= "encontrado".pluralize(funcionario.errors.count) %>:</h4>
       <ul>
-        <% funcionario.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+        <% funcionario.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :matricula, style: "display: block" %>
-    <%= form.text_field :matricula %>
+  <div class="mb-3">
+    <%= form.label :matricula, "Matrícula", class: "form-label" %>
+    <%= form.text_field :matricula, class: "form-control" %>
   </div>
 
-  <div>
-    <%= form.label :nome, style: "display: block" %>
-    <%= form.text_field :nome %>
+  <div class="mb-3">
+    <%= form.label :nome, class: "form-label" %>
+    <%= form.text_field :nome, class: "form-control" %>
   </div>
 
-  <div>
-    <%= form.label :cargo, style: "display: block" %>
-    <%= form.text_field :cargo %>
+  <div class="mb-3">
+    <%= form.label :cpf, "CPF", class: "form-label" %>
+    <%= form.text_field :cpf, class: "form-control" %>
   </div>
 
-  <div>
-    <%= form.label :email, style: "display: block" %>
-    <%= form.email_field :email %>
+  <div class="mb-3">
+    <%= form.label :cargo, class: "form-label" %>
+    <%= form.text_field :cargo, class: "form-control" %>
   </div>
 
-  <div>
-    <%= form.label :salario, style: "display: block" %>
-    <%= form.text_field :salario %>
+  <div class="mb-3">
+    <%= form.label :email, class: "form-label" %>
+    <%= form.email_field :email, class: "form-control" %>
   </div>
 
-  <div>
-    <%= form.label :data_admissao, style: "display: block" %>
-    <%= form.date_field :data_admissao %>
+  <div class="mb-3">
+    <%= form.label :salario, "Salário", class: "form-label" %>
+    <%= form.text_field :salario, class: "form-control" %>
   </div>
 
-  <div>
-    <%= form.label :cpf, style: "display: block" %>
-    <%= form.text_field :cpf %>
+  <div class="mb-3">
+    <%= form.label :data_admissao, "Data de admissão", class: "form-label" %>
+    <%= form.date_field :data_admissao, class: "form-control" %>
   </div>
 
-  <div>
-    <%= form.submit %>
+  <div class="text-end">
+    <%= form.submit "Salvar", class: "btn btn-primary" %>
   </div>
 <% end %>

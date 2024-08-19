@@ -1,81 +1,90 @@
-<%= form_with(model: atendimento) do |form| %>
+<%= form_with(model: atendimento, local: true) do |form| %>
   <% if atendimento.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(atendimento.errors.count, "erro") %> <%= "encontrado".pluralize(atendimento.errors.count) %>:</h2>
-
+    <div class="alert alert-danger">
+      <h4><%= pluralize(atendimento.errors.count, "erro") %> <%= "encontrado".pluralize(atendimento.errors.count) %>:</h4>
       <ul>
-        <% atendimento.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+        <% atendimento.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :cliente_id, "Cliente", style: "display: block" %>
-    <%= form.collection_select :cliente_id, Cliente.all, :id, :nome, prompt: "Selecione um cliente" %>
+  <div class="mb-3">
+    <%= form.label :cliente_id, "Cliente", class: "form-label" %>
+    <%= form.collection_select :cliente_id, Cliente.all, :id, :nome, { prompt: "Selecione um cliente" }, { class: "form-select" } %>
   </div>
 
-  <div>
-    <%= form.label :veiculo_id, "Veículo", style: "display: block" %>
-    <%= form.collection_select :veiculo_id, [], :id, :modelo, prompt: "Selecione um veículo", id: "veiculo_select" %>
+  <div class="mb-3">
+    <%= form.label :veiculo_id, "Veículo", class: "form-label" %>
+    <%= form.collection_select :veiculo_id, [], :id, :modelo, { prompt: "Selecione um veículo" }, { class: "form-select", id: "veiculo_select" } %>
   </div>
 
-  <div>
-    <%= form.label :data_inicio, style: "display: block" %>
-    <%= form.datetime_field :data_inicio %>
+  <div class="mb-3">
+    <%= form.label :data_inicio, class: "form-label" %>
+    <%= form.datetime_field :data_inicio, class: "form-control" %>
   </div>
 
-  <div>
-    <%= form.label :data_termino, style: "display: block" %>
-    <%= form.datetime_field :data_termino %>
+  <div class="mb-3">
+    <%= form.label :data_termino, class: "form-label" %>
+    <%= form.datetime_field :data_termino, class: "form-control" %>
   </div>
 
-  <div>
-    <%= form.label :status, style: "display: block" %>
+  <div class="mb-3">
+    <%= form.label :status, class: "form-label" %>
     <%= form.select :status, options_for_select([['Agendado', 'agendado'],
                                                  ['Em andamento', 'andamento'],
                                                  ['Concluído', 'concluido'],
-                                                 ['Cancelado', 'cancelado']], atendimento.status) %>
+                                                 ['Cancelado', 'cancelado']], atendimento.status), { class: "form-select" } %>
   </div>
 
-  <div>
-    <%= form.label :funcionarios, "Funcionários", style: "display: block" %>
-    <%= form.collection_check_boxes :funcionario_ids, Funcionario.all, :id, :nome do |cb| %>
-      <div>
-        <%= cb.label { cb.check_box + cb.text } %>
-      </div>
-    <% end %>
-  </div>
+  <% if Funcionario.any? %>
+    <div class="mb-3">
+      <%= form.label :funcionarios, "Funcionários", class: "form-label" %>
+      <%= form.collection_check_boxes :funcionario_ids, Funcionario.all, :id, :nome do |cb| %>
+        <div class="form-check">
+          <%= cb.label class: "form-check-label" do %>
+            <%= cb.check_box class: "form-check-input" %>
+            <%= cb.text %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="alert alert-warning">
+      Nenhum funcionário cadastrado no sistema.<br/>
+      <%= link_to 'Criar um funcionário', new_funcionario_path, class: 'text-primary' %>
+    </div>
+  <% end %>
 
-  <div>
-    <%= form.submit %>
+  <div class="text-center">
+    <%= form.submit "Salvar", class: "btn btn-primary", disabled: Funcionario.none? %>
   </div>
 <% end %>
 
 <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const clienteSelect = document.querySelector("select[name='atendimento[cliente_id]']");
-        const veiculoSelect = document.querySelector("#atendimento_veiculo_id");
+  document.addEventListener("DOMContentLoaded", () => {
+    const clienteSelect = document.querySelector("select[name='atendimento[cliente_id]']");
+    const veiculoSelect = document.querySelector("#veiculo_select");
 
-        clienteSelect.addEventListener("change", (event) => {
-            const clienteId = event.target.value;
+    clienteSelect.addEventListener("change", (event) => {
+      const clienteId = event.target.value;
 
-            if (clienteId) {
-                fetch(`/clientes/${clienteId}/veiculos`)
-                    .then(response => response.json())
-                    .then(veiculos => {
-                        veiculoSelect.innerHTML = '<option value="">Selecione um veículo</option>';
-                        veiculos.forEach(veiculo => {
-                            const option = document.createElement("option");
-                            option.value = veiculo.id;
-                            option.textContent = `${veiculo.placa} - ${veiculo.modelo}`;
-                            veiculoSelect.appendChild(option);
-                        });
-                    });
-            } else {
-                veiculoSelect.innerHTML = '<option value="">Selecione um veículo</option>';
-            }
-        });
+      if (clienteId) {
+        fetch(`/clientes/${clienteId}/veiculos`)
+          .then(response => response.json())
+          .then(veiculos => {
+            veiculoSelect.innerHTML = '<option value="">Selecione um veículo</option>';
+            veiculos.forEach(veiculo => {
+              const option = document.createElement("option");
+              option.value = veiculo.id;
+              option.textContent = `${veiculo.placa} - ${veiculo.modelo}`;
+              veiculoSelect.appendChild(option);
+            });
+          });
+      } else {
+        veiculoSelect.innerHTML = '<option value="">Selecione um veículo</option>';
+      }
     });
+  });
 </script>

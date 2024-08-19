@@ -2,15 +2,30 @@
 
 <% content_for :title, "Administradores" %>
 
-<h1>Administradores</h1>
-
-<div id="administradors">
-  <% @administradors.each do |administrador| %>
-    <%= render administrador %>
-    <p>
-      <%= link_to "Exibir administrador", administrador %>
-    </p>
-  <% end %>
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1>Administrador</h1>
+  <%= link_to "Novo Administrador", new_administrador_path, class: "btn btn-primary" %>
 </div>
 
-<%= link_to "Novo administrador", new_administrador_path %>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Email</th>
+      <th colspan="3">Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @administradors.each do |administrador| %>
+      <tr>
+        <td><%= administrador.id %></td>
+        <td><%= administrador.email %></td>
+        <td><%= link_to "Exibir", administrador, class: "btn btn-info btn-sm" %></td>
+        <td><%= link_to "Editar", edit_administrador_path(administrador), class: "btn btn-warning btn-sm" %></td>
+        <td>
+          <%= link_to "Excluir", administrador, method: :delete, data: { confirm: "Tem certeza que deseja excluir este administrador?" }, class: "btn btn-danger btn-sm" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

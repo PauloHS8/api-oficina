@@ -1,5 +1,9 @@
 source "https://rubygems.org"
 
+gem "bootstrap"
+gem "sassc-rails"
+gem "jquery-rails"
+gem "popper_js"
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.2.0"
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
@@ -31,7 +35,7 @@ gem "tzinfo-data"
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 
-gem 'dotenv-rails', groups: [:development, :test]
+gem "dotenv-rails", groups: [ :development, :test ]
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
@@ -69,8 +73,6 @@ end
 
 
 group :actions do
-  gem 'pg'
-  gem 'activerecord-postgresql-adapter'
-
-
+  gem "pg"
+  gem "activerecord-postgresql-adapter"
 end

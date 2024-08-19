@@ -35,16 +35,5 @@
   </tbody>
 </table>
 
-<h1>Servicos</h1>
 
-<%= link_to "Novo servico", new_servico_path %>
-
-<div id="servicos">
-  <% @servicos.each do |servico| %>
-    <%= render servico %>
-    <p>
-      <%= link_to "Exibir servico", servico %>
-    </p>
-  <% end %>
-</div>
 

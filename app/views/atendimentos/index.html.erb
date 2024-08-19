@@ -4,6 +4,8 @@
 
 <h1>Atendimentos</h1>
 
+<%= link_to "Novo atendimento", new_atendimento_path %>
+
 <div id="atendimentos">
   <% @atendimentos.each do |atendimento| %>
     <%= render atendimento %>
@@ -12,5 +14,3 @@
     </p>
   <% end %>
 </div>
-
-<%= link_to "Novo atendimento", new_atendimento_path %>

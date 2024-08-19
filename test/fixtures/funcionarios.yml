@@ -3,17 +3,17 @@
 one:
   matricula: F12345
   nome: Joao da Silva
+  cpf: 12345678910
   cargo: Analista de Recursos Humanos
   email: joao.silva@empresa.com.br
   salario: 5000.00
-  data_admissao: 2024-08-1
-  cpf: 12345678909
+  data_admissao: 2024-08-01
 
 two:
   matricula: A98765
   nome: Maria Oliveira
+  cpf: 98765432100
   cargo: Gerente de Vendas
-  email: MyString
+  email: maria.oliveira@empresa.com.br
   salario: 8500.00
   data_admissao: 2024-03-11
-  cpf: 98765432100

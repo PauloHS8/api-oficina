@@ -4,6 +4,8 @@
 
 <h1>Peças</h1>
 
+<%= link_to "Nova peça", new_peca_path %>
+
 <div id="pecas">
   <% @pecas.each do |peca| %>
     <%= render peca %>
@@ -12,5 +14,3 @@
     </p>
   <% end %>
 </div>
-
-<%= link_to "Nova peça", new_peca_path %>

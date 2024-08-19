@@ -4,6 +4,8 @@
 
 <h1>Estoques</h1>
 
+<%= link_to "Novo estoque", new_estoque_path %>
+
 <div id="estoques">
   <% @estoques.each do |estoque| %>
     <%= render estoque %>
@@ -12,5 +14,3 @@
     </p>
   <% end %>
 </div>
-
-<%= link_to "Novo estoque", new_estoque_path %>

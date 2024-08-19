@@ -40,7 +40,6 @@ jobs:
 
       - name: Bundle Install
         run: |
-          sudo apt-get install -y libsass1 libsass-dev
           bundle config path vendor/bundle
           bundle install --jobs 4 --retry 3
 

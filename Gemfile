@@ -1,6 +1,5 @@
 source "https://rubygems.org"
 
-gem "pg"
 gem "bootstrap"
 gem "sassc-rails"
 gem "jquery-rails"
@@ -74,5 +73,6 @@ end
 
 
 group :actions do
+  gem "pg"
   gem "activerecord-postgresql-adapter"
 end

@@ -94,7 +94,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_17_220636) do
     t.string "modelo"
     t.integer "ano"
     t.string "cor"
-    t.integer "quilometragem"
+    t.float "quilometragem"
     t.string "chassi"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

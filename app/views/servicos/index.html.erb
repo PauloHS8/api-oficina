@@ -1,6 +1,39 @@
 <p style="color: green"><%= notice %></p>
 
-<% content_for :title, "Servicos" %>
+<% content_for :title, "Serviços" %>
+
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1>Serviços</h1>
+  <%= link_to "Novo serviço", new_servico_path, class: "btn btn-primary" %>
+</div>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Código</th>
+      <th>Nome</th>
+      <th>Descrição</th>
+      <th>Preço</th>
+      <th colspan="3">Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @servicos.each do |servico| %>
+      <tr>
+        <td><%= servico.codigo %></td>
+        <td><%= servico.nome %></td>
+        <td><%= servico.descricao %></td>
+        <td><%= number_to_currency(servico.preco, unit: "R$", separator: ",", delimiter: ".") %></td>
+        <td><%= link_to "Exibir", servico, class: "btn btn-info btn-sm" %></td>
+        <td><%= link_to "Editar", edit_servico_path(servico), class: "btn btn-warning btn-sm" %></td>
+        <td>
+          <%= link_to "Excluir", servico, method: :delete, data: { confirm: "Tem certeza que deseja excluir este serviço?" }, class: "btn btn-danger btn-sm" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 
 <h1>Servicos</h1>
 
@@ -14,3 +47,4 @@
     </p>
   <% end %>
 </div>
+

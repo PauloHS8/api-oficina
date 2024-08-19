@@ -16,8 +16,18 @@ class VeiculosControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create veiculo" do
+    veiculo = Veiculo.new(
+      ano: 2024,
+      cor: 'azul',
+      modelo: 'Novo Modelo',
+      placa: 'NEW1234',
+      quilometragem: 5000,
+      chassi: 'NEWCHASSI12345678',
+      cliente_id: 1
+    )
+
     assert_difference("Veiculo.count") do
-      post veiculos_url, params: { veiculo: { ano: 2024, chassi: 'NEWCHASSI123456789', cor: 'azul', modelo: 'Novo Modelo', placa: 'NEW1234', quilometragem: 5000, cliente_id: 1 } }
+      post veiculos_url, params: { veiculo: veiculo.attributes }
     end
 
     assert_redirected_to veiculo_url(Veiculo.last)

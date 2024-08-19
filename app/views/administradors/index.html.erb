@@ -4,6 +4,8 @@
 
 <h1>Administradores</h1>
 
+<%= link_to "Novo administrador", new_administrador_path %>
+
 <div id="administradors">
   <% @administradors.each do |administrador| %>
     <%= render administrador %>
@@ -12,5 +14,3 @@
     </p>
   <% end %>
 </div>
-
-<%= link_to "Novo administrador", new_administrador_path %>

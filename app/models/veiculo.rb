@@ -7,6 +7,6 @@ class Veiculo < ApplicationRecord
   validates :ano, presence: true, numericality: { only_integer: true }
   validates :cor, presence: true, length: { minimum: 3, maximum: 15 }
   validates :quilometragem, presence: true, numericality: { greater_than_or_equal_to: 0 }
-  validates :chassi, presence: true, length: { minimum: 17, maximum: 17 }
+  validates :chassi, presence: true, length: { minimum: 17, maximum: 17 }, uniqueness: { case_sensitive: false }
 
 end

@@ -16,8 +16,18 @@ class FuncionariosControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create funcionario" do
+    funcionario = Funcionario.new(
+      matricula: "F54321",
+      nome: "Carlos Souza",
+      cpf: "12345678911",
+      cargo: "Gerente de Projetos",
+      email: "carlos.souza@empresa.com.br",
+      salario: 7000.00,
+      data_admissao: "2024-08-01"
+    )
+
     assert_difference("Funcionario.count") do
-      post funcionarios_url, params: { funcionario: { cargo: @funcionario.cargo, cpf: @funcionario.cpf, data_admissao: @funcionario.data_admissao, email: @funcionario.email, matricula: @funcionario.matricula, nome: @funcionario.nome, salario: @funcionario.salario } }
+      post funcionarios_url, params: { funcionario: funcionario.attributes }
     end
 
     assert_redirected_to funcionario_url(Funcionario.last)

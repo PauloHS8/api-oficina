@@ -12,13 +12,18 @@
   <% end %>
 
   <div>
-    <%= form.label :matricula, style: "display: block" %>
+    <%= form.label :matricula, "Matrícula", style: "display: block" %>
     <%= form.text_field :matricula %>
   </div>
 
   <div>
     <%= form.label :nome, style: "display: block" %>
     <%= form.text_field :nome %>
+  </div>
+
+  <div>
+    <%= form.label :cpf, "CPF", style: "display: block" %>
+    <%= form.text_field :cpf %>
   </div>
 
   <div>
@@ -32,18 +37,13 @@
   </div>
 
   <div>
-    <%= form.label :salario, style: "display: block" %>
+    <%= form.label :salario, "Salário", style: "display: block" %>
     <%= form.text_field :salario %>
   </div>
 
   <div>
-    <%= form.label :data_admissao, style: "display: block" %>
+    <%= form.label :data_admissao, "Data de admissão", style: "display: block" %>
     <%= form.date_field :data_admissao %>
-  </div>
-
-  <div>
-    <%= form.label :cpf, style: "display: block" %>
-    <%= form.text_field :cpf %>
   </div>
 
   <div>

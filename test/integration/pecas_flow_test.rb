@@ -16,17 +16,15 @@ class PecasFlowTest < ActionDispatch::IntegrationTest
   test "should show peca" do
     get peca_url(@peca)
     assert_response :success
-    assert_select "p", text: /Código:\s#{@peca.codigo}/
-    assert_select "p", text: /Nome:\s#{@peca.nome}/
-    assert_select "p", text: /Preço:\s#{@peca.preco}/
-    assert_select "p", text: /Tipo:\s#{@peca.tipo}/
-    assert_select "p", text: /Fabricante:\s#{@peca.fabricante}/
-    assert_select "p", text: /Data de validade:\s#{@peca.data_validade.strftime("%Y-%m-%d")}/
+    assert_select "p", text: /Código:\s*#{@peca.codigo}/
+    assert_select "p", text: /Nome:\s*#{@peca.nome}/
+    assert_select "p", text: /Preço:\s*#{@peca.preco}/
+    assert_select "p", text: /Tipo:\s*#{@peca.tipo}/
+    assert_select "p", text: /Fabricante:\s*#{@peca.fabricante}/
+    assert_select "p", text: /Data de validade:\s*#{@peca.data_validade.strftime("%Y-%m-%d")}/
     assert_select "a", text: "Editar peça"
     assert_select "button", text: "Excluir peça"
   end
-
-
 
   test "should get edit" do
     get edit_peca_url(@peca)

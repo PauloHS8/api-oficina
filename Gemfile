@@ -66,13 +66,13 @@ group :test do
 end
 
 group :development, :test do
-  gem 'rspec-rails'
-  gem 'capybara'
-  gem 'factory_bot_rails'
+  gem "rspec-rails"
+  gem "capybara"
+  gem "factory_bot_rails"
 end
 
 
-group :actions do
+group :production, :actions do
   gem "pg"
   gem "activerecord-postgresql-adapter"
 end

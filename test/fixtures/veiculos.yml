@@ -20,3 +20,12 @@ two:
   chassi: 3X7Fp9bRJ2YU65432
   cliente_id: 2
 
+tree:
+  id: 3
+  placa: ABF1254
+  modelo: Camaro
+  ano: 1994
+  cor: amarelo
+  quilometragem: 25000
+  chassi: 3X7Fp7cRJ2YU65432
+  cliente_id: 1

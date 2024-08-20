@@ -36,12 +36,21 @@ class ClientesFlowTest < ActionDispatch::IntegrationTest
   end
 
   test "should destroy cliente" do
+    cliente = Cliente.create!(
+      nome: "Cliente Teste",
+      email: "cliente@test.com",
+      telefone: "11987654321",
+      cpf: "12345678901",
+      endereco: "Rua Teste, 123"
+    )
+
     assert_difference('Cliente.count', -1) do
-      delete cliente_url(@cliente)
+      delete cliente_url(cliente)
     end
 
     assert_redirected_to clientes_path
     follow_redirect!
     assert_select "p", "Cliente excluído com sucesso."
   end
+
 end

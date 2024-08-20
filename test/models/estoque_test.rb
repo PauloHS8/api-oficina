@@ -16,4 +16,18 @@ class EstoqueTest < ActiveSupport::TestCase
     estoque = Estoque.new(codigo: "MyString", quantidade: 1)
     assert estoque.save, "Could not save a valid estoque"
   end
+
+
+  test "should not save estoque without codigo and quantidade" do
+    estoque = Estoque.new
+    assert_not estoque.save, "Saved the estoque without codigo and quantidade"
+  end
+
+  test "should associate with pecas" do
+    estoque = estoques(:one)
+    peca = pecas(:one)
+    estoque.pecas << peca
+    assert_includes estoque.pecas, peca, "Estoque should be associated with peca"
+  end
+
 end

@@ -26,11 +26,16 @@ class ClientesFlowTest < ActionDispatch::IntegrationTest
   test "should show cliente" do
     get cliente_url(@cliente)
     assert_response :success
-    assert_select "#cliente#{ @cliente.id }"
+    assert_select "p", text: /Nome:\s*#{@cliente.nome}/
+    assert_select "p", text: /Email:\s*#{@cliente.email}/
+    assert_select "p", text: /Telefone:\s*#{@cliente.telefone}/
+    assert_select "p", text: /CPF:\s*#{@cliente.cpf}/
+    assert_select "p", text: /Endereço:\s*#{@cliente.endereco}/
+    assert_select "a", text: "Editar cliente"
+    assert_select "button", text: "Excluir cliente"
   end
 
-
-  test "should destroy  cliente" do
+  test "should destroy cliente" do
     assert_difference('Cliente.count', -1) do
       delete cliente_url(@cliente)
     end

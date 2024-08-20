@@ -10,12 +10,6 @@ class AdministradorsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  group :development, :test do
-    gem 'rspec-rails'
-    gem 'capybara'
-    gem 'factory_bot_rails'
-  end
-
   test "should get new" do
     get new_administrador_url
     assert_response :success

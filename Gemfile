@@ -1,6 +1,5 @@
 source "https://rubygems.org"
 
-gem "pg"
 gem "bootstrap"
 gem "sassc-rails"
 gem "jquery-rails"
@@ -72,7 +71,12 @@ group :development, :test do
   gem 'factory_bot_rails'
 end
 
-
 group :actions do
+  gem "pg"
   gem "activerecord-postgresql-adapter"
+end
+
+group :production do
+  gem 'pg'
+  gem 'activerecord-postgresql-adapter'
 end

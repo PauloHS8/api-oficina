@@ -9,7 +9,7 @@ one:
 two:
   data_inicio: 2024-07-11 15:55:47
   data_termino: 2024-08-11 18:55:47
-  status: andamento
+  status: "andamento"
   veiculo_id: 2
 
 

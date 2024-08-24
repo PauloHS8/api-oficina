@@ -1,3 +1,4 @@
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/41c0bdbf95a2497082f82b479341ae77)](https://app.codacy.com/gh/ES-oficina-automoveis/api-oficina/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 # Sistema de Gerenciamento de Oficina de Automóveis
 
 ## :octocat: Integrantes
@@ -8,6 +9,8 @@
 
 Projeto para implementação de um SaaS em Ruby e Rails com foco no servidor para a disciplina de Engenharia de Software ministrado pelo Professor Dr. [Rodrigo Andrade](https://github.com/rcaa), da UFAPE, referente ao período de 2024.1 com intuito de avaliação para a 2ª Verificação de Aprendizagem.
 O projeto visa atender a um cliente que procura um sistema para realizar, de maneira rápida e prática, a gestão de sua oficina de automóveis. O sistema otimizará operações como o agendamento de serviços, organizando ordens de trabalho e horários dos mecânicos, além de controlar o estoque de peças e materiais, garantindo a disponibilidade para reparos. Adicionalmente, permitirá a gestão de clientes e veículos, armazenando históricos de serviços e manutenções. O sistema também facilitará a geração de orçamentos e faturas, oferecerá relatórios detalhados para análise de desempenho e fluxo de caixa, e poderá integrar-se com sistemas de pagamento. Recursos adicionais, como notificações automáticas para os clientes sobre o status do serviço e lembretes de manutenção, serão incluídos para melhorar a satisfação e fidelização dos clientes.
+
+*   [Site no Render](https://oficina-automoveis.onrender.com)
 
 ## :round_pushpin: Objetivos
 

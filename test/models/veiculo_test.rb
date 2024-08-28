@@ -5,62 +5,79 @@ class VeiculoTest < ActiveSupport::TestCase
     @veiculo = veiculos(:one)
   end
 
-  test "valid veiculo" do
+  test "deve ser válido" do
     assert @veiculo.valid?
   end
 
-  test "invalid without placa" do
+  test "placa deve estar presente" do
     @veiculo.placa = nil
-    assert_not @veiculo.valid?, "Veiculo is valid without a placa"
+    assert_not @veiculo.save
+    assert_includes @veiculo.errors[:placa], "não pode ficar em branco"
   end
 
-  test "invalid without modelo" do
+  test "modelo deve estar presente" do
     @veiculo.modelo = nil
-    assert_not @veiculo.valid?, "Veiculo is valid without a modelo"
+    assert_not @veiculo.save
+    assert_includes @veiculo.errors[:modelo], "não pode ficar em branco"
   end
 
-  test "invalid without ano" do
+  test "ano deve estar presente" do
     @veiculo.ano = nil
-    assert_not @veiculo.valid?, "Veiculo is valid without an ano"
+    assert_not @veiculo.save
+    assert_includes @veiculo.errors[:ano], "não pode ficar em branco"
   end
 
-  test "invalid without cor" do
+  test "cor deve estar presente" do
     @veiculo.cor = nil
-    assert_not @veiculo.valid?, "Veiculo is valid without a cor"
+    assert_not @veiculo.save
+    assert_includes @veiculo.errors[:cor], "não pode ficar em branco"
   end
 
-  test "invalid without quilometragem" do
+  test "quilometragem deve estar presente" do
     @veiculo.quilometragem = nil
-    assert_not @veiculo.valid?, "Veiculo is valid without a quilometragem"
+    assert_not @veiculo.save
+    assert_includes @veiculo.errors[:quilometragem], "não pode ficar em branco"
   end
 
-  test "invalid without chassi" do
+  test "quilometragem deve ser maior ou igual a 0" do
+    @veiculo.quilometragem = -1
+    assert_not @veiculo.save
+    assert_includes @veiculo.errors[:quilometragem], "deve ser maior ou igual a 0"
+  end
+
+  test "chassi deve estar presente" do
     @veiculo.chassi = nil
-    assert_not @veiculo.valid?, "Veiculo is valid without a chassi"
+    assert_not @veiculo.save
+    assert_includes @veiculo.errors[:chassi], "não pode ficar em branco"
   end
 
-  test "invalid with duplicate placa" do
-    duplicate_veiculo = @veiculo.dup
-    assert_not duplicate_veiculo.valid?, "Veiculo is valid with a duplicate placa"
+  test "placa deve ser única" do
+    veiculo_duplicado = @veiculo.dup
+    assert_not veiculo_duplicado.save
+    assert_includes veiculo_duplicado.errors[:placa], "já está em uso"
   end
 
-  test "invalid with short placa" do
+  test "placa não deve ter menos de 7 caracteres" do
     @veiculo.placa = "AB123"
-    assert_not @veiculo.valid?, "Veiculo is valid with a short placa"
+    assert_not @veiculo.save
+    assert_includes @veiculo.errors[:placa], "é muito curto (mínimo: 7 caracteres)"
   end
 
-  test "invalid with long placa" do
+  test "placa não deve ter mais de 7 caracteres" do
     @veiculo.placa = "AB1234567890"
-    assert_not @veiculo.valid?, "Veiculo is valid with a long placa"
+    assert_not @veiculo.save
+    assert_includes @veiculo.errors[:placa], "é muito longo (máximo: 7 caracteres)"
   end
 
-  test "invalid with short chassi" do
+  test "chassi não deve ter menos de 17 caracteres" do
     @veiculo.chassi = "12345"
-    assert_not @veiculo.valid?, "Veiculo is valid with a short chassi"
+    assert_not @veiculo.save
+    assert_includes @veiculo.errors[:chassi], "é muito curto (mínimo: 17 caracteres)"
   end
 
-  test "invalid with long chassi" do
-    @veiculo.chassi = "A" * 51
-    assert_not @veiculo.valid?, "Veiculo is valid with a long chassi"
+  test "chassi não deve ter mais de 17 caracteres" do
+    @veiculo.chassi = "A" * 18
+    assert_not @veiculo.save
+    assert_includes @veiculo.errors[:chassi], "é muito longo (máximo: 17 caracteres)"
   end
 end

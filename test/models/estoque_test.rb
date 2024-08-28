@@ -2,32 +2,35 @@
 require "test_helper"
 
 class EstoqueTest < ActiveSupport::TestCase
-  test "should not save estoque without codigo" do
+  test "não deve salvar estoque sem código" do
     estoque = Estoque.new(quantidade: 1)
-    assert_not estoque.save, "Saved the estoque without a codigo"
+    assert_not estoque.save, "O estoque não deve ser salvo sem um código."
+    assert_includes estoque.errors.messages[:codigo], "não pode ficar em branco"
   end
 
-  test "should not save estoque without quantidade" do
-    estoque = Estoque.new(codigo: "MyString")
-    assert_not estoque.save, "Saved the estoque without a quantidade"
+  test "não deve salvar estoque sem quantidade" do
+    estoque = Estoque.new(codigo: "MeuCodigo")
+    assert_not estoque.save, "O estoque não deve ser salvo sem uma quantidade."
+    assert_includes estoque.errors.messages[:quantidade], "não pode ficar em branco"
   end
 
-  test "should save valid estoque" do
-    estoque = Estoque.new(codigo: "MyString", quantidade: 1)
-    assert estoque.save, "Could not save a valid estoque"
+  test "deve salvar estoque válido" do
+    estoque = Estoque.new(codigo: "MeuCodigo", quantidade: 1)
+    assert estoque.save, "O estoque válido não foi salvo."
   end
 
-
-  test "should not save estoque without codigo and quantidade" do
+  test "não deve salvar estoque sem código e quantidade" do
     estoque = Estoque.new
-    assert_not estoque.save, "Saved the estoque without codigo and quantidade"
+    assert_not estoque.save, "O estoque não deve ser salvo sem código e quantidade."
+    assert_includes estoque.errors.messages[:codigo], "não pode ficar em branco"
+    assert_includes estoque.errors.messages[:quantidade], "não pode ficar em branco"
   end
 
-  test "should associate with pecas" do
+  test "deve associar com peças e salvar" do
     estoque = estoques(:one)
     peca = pecas(:one)
     estoque.pecas << peca
-    assert_includes estoque.pecas, peca, "Estoque should be associated with peca"
+    assert_includes estoque.pecas, peca, "O estoque deve estar associado à peça."
+    assert estoque.save
   end
-
 end

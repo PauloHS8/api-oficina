@@ -5,37 +5,65 @@ class ClienteTest < ActiveSupport::TestCase
     @cliente = clientes(:one)
   end
 
-  test "valid cliente" do
+  test "cliente deve ser válido" do
     assert @cliente.valid?
   end
 
-  test "invalid without nome" do
+  test "deve ser inválido sem nome" do
     @cliente.nome = nil
-    assert_not @cliente.valid?, "Cliente is valid without a nome"
+    assert_not @cliente.save
+    assert_not_empty @cliente.errors[:nome]
   end
 
-  test "invalid without email" do
+  test "deve ser inválido sem email" do
     @cliente.email = nil
-    assert_not @cliente.valid?, "Cliente is valid without an email"
+    assert_not @cliente.save
+    assert_not_empty @cliente.errors[:email]
   end
 
-  test "invalid without telefone" do
+  test "deve ser inválido sem telefone" do
     @cliente.telefone = nil
-    assert_not @cliente.valid?, "Cliente is valid without a telefone"
+    assert_not @cliente.save
+    assert_not_empty @cliente.errors[:telefone]
   end
 
-  test "invalid without cpf" do
+  test "deve ser inválido sem CPF" do
     @cliente.cpf = nil
-    assert_not @cliente.valid?, "Cliente is valid without a cpf"
+    assert_not @cliente.save
+    assert_not_empty @cliente.errors[:cpf]
   end
 
-  test "invalid without endereco" do
+  test "deve ser inválido sem endereco" do
     @cliente.endereco = nil
-    assert_not @cliente.valid?, "Cliente is valid without an endereco"
+    assert_not @cliente.save
+    assert_not_empty @cliente.errors[:endereco]
   end
 
-  test "email must be unique" do
-    duplicate_cliente = @cliente.dup
-    assert_not duplicate_cliente.valid?, "Cliente is valid with a duplicate email"
+  test "email deve ser único" do
+    @cliente.save
+    clienteEmailDuplicado = Cliente.new({
+      nome: "Maria",
+      email: @cliente.email,
+      telefone: "87999004466",
+      cpf: "01223334444",
+      endereco: "Rua A"
+    })
+
+    assert_not clienteEmailDuplicado.save
+    assert_includes clienteEmailDuplicado.errors[:email], "já está em uso"
+  end
+
+  test "CPF deve ser único" do
+    @cliente.save
+    clienteCpfDuplicado = Cliente.new({
+      nome: "Mari",
+      email: "mari@gmail.com",
+      telefone: "87999004466",
+      cpf: @cliente.cpf,
+      endereco: "Rua A"
+    })
+
+    assert_not clienteCpfDuplicado.save
+    assert_includes clienteCpfDuplicado.errors[:cpf], "já está em uso"
   end
 end

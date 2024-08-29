@@ -3,37 +3,34 @@ require "test_helper"
 class AtendimentoTest < ActiveSupport::TestCase
   setup do
     @atendimento = atendimentos(:one)
-    puts @atendimento.status.inspect
+    @atendimento.status = "agendado"
   end
 
-  test "valid atendimento" do
-    @atendimento = Atendimento.new(
-      data_inicio: "2024-09-11 15:55:47",
-      data_termino: "2024-09-17 18:55:47",
-      status: :agendado,
-      veiculo_id: 1
-    )
+  test "atendimento deve ser válido" do
     assert @atendimento.valid?
   end
 
-  test "invalid without data_inicio" do
+  test "deve ser inválido sem data_inicio" do
     @atendimento.data_inicio = nil
-    assert_not @atendimento.valid?, "Atendimento is valid without a data_inicio"
+    assert_not @atendimento.save
+    assert_includes @atendimento.errors[:data_inicio], "não pode ficar em branco"
   end
 
-  test "invalid without data_termino" do
+  test "deve ser inválido sem data_termino" do
     @atendimento.data_termino = nil
-    assert_not @atendimento.valid?, "Atendimento is valid without a data_termino"
+    assert_not @atendimento.save
+    assert_includes @atendimento.errors[:data_termino], "não pode ficar em branco"
   end
 
-  test "invalid without status" do
+  test "deve ser inválido sem status" do
     @atendimento.status = nil
-    assert_not @atendimento.valid?, "Atendimento is valid without a status"
+    assert_not @atendimento.save
+    assert_includes @atendimento.errors[:status], "não pode ficar em branco"
   end
 
-  test "invalid with incorrect status" do
+  test "deve lançar erro com status inválido" do
     assert_raises(ArgumentError) do
-      @atendimento.status = "invalid_status"
+      @atendimento.status = "status_inválido"
     end
   end
 end

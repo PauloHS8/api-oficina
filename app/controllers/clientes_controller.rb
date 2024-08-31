@@ -1,4 +1,4 @@
-class ClientesController < ApplicationController
+class ClientesController < AdminController
   before_action :set_cliente, only: %i[ show edit update destroy veiculos ]
 
   # GET /clientes or /clientes.json

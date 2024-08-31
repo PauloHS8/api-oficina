@@ -1,4 +1,4 @@
-class EstoquesController < ApplicationController
+class EstoquesController < AdminController
   before_action :set_estoque, only: %i[ show edit update destroy ]
 
   # GET /estoques or /estoques.json

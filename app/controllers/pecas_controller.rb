@@ -1,4 +1,4 @@
-class PecasController < ApplicationController
+class PecasController < AdminController
   before_action :set_peca, only: %i[ show edit update destroy ]
 
   # GET /pecas or /pecas.json

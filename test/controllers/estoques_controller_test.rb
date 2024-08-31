@@ -2,6 +2,7 @@ require "test_helper"
 
 class EstoquesControllerTest < ActionDispatch::IntegrationTest
   setup do
+    sign_in users(:admin)
     @estoque = estoques(:one)
   end
 

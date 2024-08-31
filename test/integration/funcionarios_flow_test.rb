@@ -3,6 +3,7 @@ include ActionView::Helpers::NumberHelper
 
 class FuncionariosFlowTest < ActionDispatch::IntegrationTest
   setup do
+    sign_in users(:admin)
     @funcionario = funcionarios(:one) # Supondo que você tenha um fixture chamado :one
   end
 

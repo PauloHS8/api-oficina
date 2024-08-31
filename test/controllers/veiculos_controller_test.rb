@@ -2,6 +2,7 @@ require "test_helper"
 
 class VeiculosControllerTest < ActionDispatch::IntegrationTest
   setup do
+    sign_in users(:admin)
     @veiculo = veiculos(:one)
   end
 

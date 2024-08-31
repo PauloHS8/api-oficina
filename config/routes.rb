@@ -10,7 +10,6 @@ Rails.application.routes.draw do
     resources :clientes
     resources :veiculos
     resources :pecas
-    resources :administradors
     resources :clientes do
       get :veiculos, on: :member
     end

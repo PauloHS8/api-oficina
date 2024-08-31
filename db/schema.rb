@@ -11,13 +11,6 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.2].define(version: 2024_08_30_222230) do
-  create_table "administradors", force: :cascade do |t|
-    t.string "email"
-    t.string "senha"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "atendimentos", force: :cascade do |t|
     t.datetime "data_inicio"
     t.datetime "data_termino"

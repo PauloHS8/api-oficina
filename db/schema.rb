@@ -11,6 +11,13 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.2].define(version: 2024_08_31_191651) do
+  create_table "administradors", force: :cascade do |t|
+    t.string "email"
+    t.string "senha"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "atendimentos", force: :cascade do |t|
     t.datetime "data_inicio"
     t.datetime "data_termino"
@@ -53,11 +60,11 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_31_191651) do
   create_table "funcionarios", force: :cascade do |t|
     t.string "matricula"
     t.string "nome"
-    t.string "cpf"
     t.string "cargo"
     t.string "email"
     t.decimal "salario"
     t.date "data_admissao"
+    t.string "cpf"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -110,6 +117,20 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_31_191651) do
     t.index ["cliente_id"], name: "index_veiculos_on_cliente_id"
   end
 
+  create_table "venda_servicos", force: :cascade do |t|
+    t.integer "servico_id", null: false
+    t.integer "cliente_id", null: false
+    t.integer "veiculo_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cliente_id"], name: "index_venda_servicos_on_cliente_id"
+    t.index ["servico_id"], name: "index_venda_servicos_on_servico_id"
+    t.index ["veiculo_id"], name: "index_venda_servicos_on_veiculo_id"
+  end
+
   add_foreign_key "atendimentos", "veiculos"
   add_foreign_key "veiculos", "clientes", on_delete: :cascade
+  add_foreign_key "venda_servicos", "clientes"
+  add_foreign_key "venda_servicos", "servicos"
+  add_foreign_key "venda_servicos", "veiculos"
 end

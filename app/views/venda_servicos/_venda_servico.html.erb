@@ -1,0 +1,32 @@
+<div id="<%= dom_id venda_servico %>">
+    <p>
+      <strong>Serviço: </strong>
+      <%= @venda_servico.servico.nome %>
+    </p>
+    <p>
+      <strong>Descrição: </strong>
+      <%= @venda_servico.servico.descricao %>
+    </p>
+    <p>
+      <strong>Cliente: </strong>
+      <%= @venda_servico.cliente.nome %>
+    </p>
+
+    <p>
+      <strong>Veículo: </strong>
+      <%= @venda_servico.veiculo.modelo %>
+    </p>
+    <p>
+      <strong>Placa: </strong>
+      <%= @venda_servico.veiculo.placa %>
+    </p>
+    <p>
+      <strong>Preço: </strong>
+      <%= @venda_servico.servico.preco %>
+    </p>
+    <p>
+      <strong>Data: </strong>
+      <%= @venda_servico.created_at.strftime("%d/%m/%Y")%>
+    </p>
+
+</div>

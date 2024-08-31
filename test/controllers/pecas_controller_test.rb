@@ -2,6 +2,7 @@ require "test_helper"
 
 class PecasControllerTest < ActionDispatch::IntegrationTest
   setup do
+    sign_in users(:admin)
     @peca = pecas(:one)
   end
 

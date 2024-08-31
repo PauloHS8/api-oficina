@@ -1,9 +1,9 @@
 require "test_helper"
 include ActionView::Helpers::NumberHelper
 
-
 class ServicosFlowTest < ActionDispatch::IntegrationTest
   setup do
+    sign_in users(:admin)
     @servico = servicos(:one)
   end
 

@@ -2,6 +2,7 @@ require "test_helper"
 
 class AtendimentoFlowTest < ActionDispatch::IntegrationTest
   setup do
+    sign_in users(:admin)
     @atendimento = atendimentos(:one)
     @veiculo = veiculos(:one)
     @funcionario = funcionarios(:one)

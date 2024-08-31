@@ -2,6 +2,7 @@ require "test_helper"
 
 class AdministradorsControllerTest < ActionDispatch::IntegrationTest
   setup do
+    sign_in users(:admin)
     @administrador = administradors(:one)
   end
 

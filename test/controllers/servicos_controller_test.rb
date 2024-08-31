@@ -2,6 +2,7 @@ require "test_helper"
 
 class ServicosControllerTest < ActionDispatch::IntegrationTest
   setup do
+    sign_in users(:admin)
     @servico = servicos(:one)
   end
 

@@ -1,4 +1,4 @@
-class ServicosController < ApplicationController
+class ServicosController < AdminController
   before_action :set_servico, only: %i[ show edit update destroy ]
 
   # GET /servicos or /servicos.json

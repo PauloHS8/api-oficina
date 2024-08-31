@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_08_30_222230) do
+ActiveRecord::Schema[7.2].define(version: 2024_08_31_191651) do
   create_table "atendimentos", force: :cascade do |t|
     t.datetime "data_inicio"
     t.datetime "data_termino"
@@ -90,6 +90,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_30_222230) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "role", default: 0
+    t.integer "cliente_id"
+    t.index ["cliente_id"], name: "index_users_on_cliente_id"
     t.index ["email"], name: "index_users_on_email"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token"
   end

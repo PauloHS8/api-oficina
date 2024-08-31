@@ -17,12 +17,6 @@ class VendaServicosController < ApplicationController
 
   # GET /venda_servicos/1/edit
   def edit
-    @venda_servico = VendaServico.find(params[:id])
-    if @venda_servico.cliente.present?
-      @veiculos = @venda_servico.cliente.veiculos
-    else
-      @veiculos = []
-    end
   end
 
   # POST /venda_servicos or /venda_servicos.json
@@ -67,6 +61,8 @@ class VendaServicosController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_venda_servico
       @venda_servico = VendaServico.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+        redirect_to venda_servicos_path, notice: "Venda não encontrada."
     end
 
     # Only allow a list of trusted parameters through.

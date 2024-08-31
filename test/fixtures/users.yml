@@ -7,3 +7,4 @@
 admin:
   email: 'admin@admin.com'
   encrypted_password: <%= Devise::Encryptor.digest(User, 123456) %>
+  role: :admin

@@ -1,4 +1,4 @@
-class FuncionariosController < ApplicationController
+class FuncionariosController < AdminController
   before_action :set_funcionario, only: %i[ show edit update destroy ]
 
   # GET /funcionarios or /funcionarios.json

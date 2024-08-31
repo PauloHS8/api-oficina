@@ -1,4 +1,4 @@
-class ClientesController < ApplicationController
+class ClientesController < AdminController
   before_action :set_cliente, only: %i[ show edit update destroy veiculos ]
 
   # GET /clientes or /clientes.json
@@ -25,6 +25,12 @@ class ClientesController < ApplicationController
 
     respond_to do |format|
       if @cliente.save
+        User.create!(
+          email: @cliente.email,
+          password: @cliente.cpf.gsub(/\D/, ''),
+          cliente_id: @cliente.id,
+        )
+        ClienteMailer.conta_criada(@cliente).deliver_later
         format.html { redirect_to cliente_url(@cliente), notice: "Cliente cadastrado com sucesso." }
         format.json { render :show, status: :created, location: @cliente }
       else

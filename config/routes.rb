@@ -1,17 +1,19 @@
 Rails.application.routes.draw do
-  root "home#index"
+  devise_for :users
 
-  resources :atendimentos
-  resources :estoques
-  resources :servicos
-  resources :funcionarios
-  resources :clientes
-  resources :veiculos
-  resources :pecas
-  resources :administradors
-
-  resources :clientes do
-    get :veiculos, on: :member
+  authenticate :user do
+    root "home#index"
+    resources :atendimentos
+    resources :estoques
+    resources :servicos
+    resources :funcionarios
+    resources :clientes
+    resources :veiculos
+    resources :pecas
+    resources :administradors
+    resources :clientes do
+      get :veiculos, on: :member
+    end
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

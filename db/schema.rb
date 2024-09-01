@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_08_31_191651) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_01_151936) do
+  create_table "agendamentos", force: :cascade do |t|
+    t.integer "veiculo_id", null: false
+    t.integer "servico_id", null: false
+    t.integer "status", default: 0, null: false
+    t.date "data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["servico_id"], name: "index_agendamentos_on_servico_id"
+    t.index ["veiculo_id"], name: "index_agendamentos_on_veiculo_id"
+  end
+
   create_table "atendimentos", force: :cascade do |t|
     t.datetime "data_inicio"
     t.datetime "data_termino"
@@ -121,8 +132,35 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_31_191651) do
     t.index ["veiculo_id"], name: "index_venda_servicos_on_veiculo_id"
   end
 
+  create_table "venda_servicos", force: :cascade do |t|
+    t.integer "servico_id", null: false
+    t.integer "cliente_id", null: false
+    t.integer "veiculo_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cliente_id"], name: "index_venda_servicos_on_cliente_id"
+    t.index ["servico_id"], name: "index_venda_servicos_on_servico_id"
+    t.index ["veiculo_id"], name: "index_venda_servicos_on_veiculo_id"
+  end
+
+  create_table "venda_servicos", force: :cascade do |t|
+    t.integer "servico_id", null: false
+    t.integer "cliente_id", null: false
+    t.integer "veiculo_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cliente_id"], name: "index_venda_servicos_on_cliente_id"
+    t.index ["servico_id"], name: "index_venda_servicos_on_servico_id"
+    t.index ["veiculo_id"], name: "index_venda_servicos_on_veiculo_id"
+  end
+
+  add_foreign_key "agendamentos", "servicos"
+  add_foreign_key "agendamentos", "veiculos"
   add_foreign_key "atendimentos", "veiculos"
   add_foreign_key "veiculos", "clientes", on_delete: :cascade
+  add_foreign_key "venda_servicos", "clientes"
+  add_foreign_key "venda_servicos", "servicos"
+  add_foreign_key "venda_servicos", "veiculos"
   add_foreign_key "venda_servicos", "clientes"
   add_foreign_key "venda_servicos", "servicos"
   add_foreign_key "venda_servicos", "veiculos"

@@ -21,3 +21,32 @@
   height: 1px;
   visibility: hidden;
 }
+
+.status-badge {
+  display: inline-block;
+  padding: 0.3em 0.6em;
+  border-radius: 0.25em;
+  color: #fff;
+  font-size: 0.875em;
+  text-align: center;
+}
+
+.badge-pending {
+  background-color: #ffc107; /* Amarelo */
+}
+
+.badge-confirmed {
+  background-color: #28a745; /* Verde */
+}
+
+.badge-in-progress {
+  background-color: #17a2b8; /* Azul */
+}
+
+.badge-completed {
+  background-color: #007bff; /* Azul escuro */
+}
+
+.badge-secondary {
+  background-color: #6c757d; /* Cinza */
+}

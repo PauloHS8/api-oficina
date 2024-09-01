@@ -1,0 +1,99 @@
+<% if notice %>
+  <div class="alert alert-success">
+    <%= notice %>
+  </div>
+<% end %>
+
+<% content_for :title, "Agendamentos" %>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1>Agendamentos</h1>
+  <%= link_to "Novo agendamento", new_agendamento_path, class: "btn btn-primary" %>
+</div>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Veículo</th>
+      <th>Serviço</th>
+      <th>Data</th>
+      <th>Status</th>
+      <th colspan="3">Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @agendamentos.each do |agendamento| %>
+      <tr>
+        <td><%= agendamento.id %></td>
+        <td><%= agendamento.veiculo.modelo %></td>
+        <td><%= agendamento.servico.nome %></td>
+        <td><%= agendamento.data.strftime("%d/%m/%Y") %></td>
+        <td>
+          <span class="status-badge <%= status_class(agendamento.status) %>">
+            <%= agendamento.status.humanize %>
+          </span>
+        </td>
+        <% if current_user.admin? %>
+          <% if agendamento.status == "pendente" %>
+            <td>
+              <%= link_to "Aprovar", "#", data: { bs_toggle: "modal", bs_target: "#updateStatusModal", agendamento_id: agendamento.id, status: "confirmado" }, class: "btn btn-primary btn-sm update-status" %>
+            </td>
+            <td>
+              <%= link_to "Reprovar", "#", data: { bs_toggle: "modal", bs_target: "#updateStatusModal", agendamento_id: agendamento.id, status: "reprovado" }, class: "btn btn-danger btn-sm update-status" %>
+            </td>
+          <% end %>
+
+        <% end %>
+
+        <td><%= link_to "Exibir", agendamento, class: "btn btn-info btn-sm" %></td>
+        <% unless current_user.admin? %>
+          <td><%= link_to "Editar", edit_agendamento_path(agendamento), class: "btn btn-warning btn-sm" %></td>
+          <td><%= link_to "Excluir", agendamento, method: :delete, data: { confirm: "Tem certeza que deseja excluir este agendamento?" }, class: "btn btn-danger btn-sm" %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="updateStatusModal" tabindex="-1" aria-labelledby="updateStatusModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="updateStatusModalLabel">Atualizar Status do Agendamento</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= form_with url: update_status_agendamentos_path, method: :patch, remote: true, id: "updateStatusForm" do |form| %>
+          <%= hidden_field_tag :agendamento_id, nil, id: "modal_agendamento_id" %>
+          <%= form.hidden_field :status, id: "status_field" %>
+            <%= form.label :funcionario_ids, "Funcionário(s)", class: "form-label" %>
+            <%= form.collection_check_boxes :funcionario_ids, Funcionario.all, :id, :nome do |b| %>
+              <div class="form-check">
+                <%= b.check_box(class: 'form-check-input') %>
+                <%= b.label(class: 'form-check-label') %>
+              </div>
+          <% end %>
+          <div class="modal-footer">
+            <%= form.submit "Confirmar", class: "btn btn-primary" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  document.querySelectorAll('.update-status').forEach(function(link) {
+    link.addEventListener('click', function() {
+      var agendamentoId = this.dataset.agendamentoId;
+      var status = this.dataset.status;
+
+      document.getElementById('modal_agendamento_id').value = agendamentoId;
+      document.getElementById('status_field').value = status;
+    });
+  });
+});
+</script>

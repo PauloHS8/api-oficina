@@ -1,0 +1,32 @@
+<%= form_with(model: agendamento) do |form| %>
+  <% if agendamento.errors.any? %>
+    <div class="alert alert-danger">
+      <h4><%= pluralize(agendamento.errors.count, "erro") %> <%= "encontrado".pluralize(agendamento.errors.count) %></h4>
+
+      <ul>
+        <% agendamento.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :veiculo_id, "Veículo", class: "form-label" %>
+    <%= form.collection_select :veiculo_id, @veiculos, :id, :modelo, { prompt: "Selecione um veículo" }, { class: 'form-select', id: 'veiculo_select' } %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :servico_id, class: "form-label" %>
+    <%= form.collection_select :servico_id, Servico.all, :id, :nome, { prompt: "Selecione um serviço" }, { class: 'form-select' } %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :data, style: "display: block" %>
+    <%= form.date_field :data %>
+  </div>
+
+  <div class="text-center">
+    <%= form.submit "Salvar", class: "btn btn-primary" %>
+  </div>
+<% end %>

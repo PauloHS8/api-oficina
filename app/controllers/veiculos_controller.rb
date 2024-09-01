@@ -4,7 +4,11 @@ class VeiculosController < ApplicationController
 
   # GET /veiculos or /veiculos.json
   def index
-    @veiculos = Veiculo.all
+    if current_user.admin?
+      @veiculos = Veiculo.all
+    else
+      @veiculos = current_user.cliente.veiculos
+    end
   end
 
   # GET /veiculos/1 or /veiculos/1.json

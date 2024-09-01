@@ -95,7 +95,11 @@ class AgendamentosController < ApplicationController
   end
 
   def set_veiculos
-    @veiculos = current_user.cliente.veiculos
+    if current_user.admin?
+      @veiculos = Veiculo.all
+    else
+      @veiculos = current_user.cliente.veiculos
+    end
   end
 
   def agendamento_params

@@ -1,5 +1,5 @@
 class Estoque < ApplicationRecord
-  has_and_belongs_to_many :pecas
+  belongs_to :peca
 
   validates :codigo, :quantidade, presence: true
 end

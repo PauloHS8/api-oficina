@@ -1,4 +1,4 @@
-<%= content_for :title, "Detalhes do funcionario" %>
+<%= content_for :title, "Detalhes do funcionário" %>
 
 <div class="container mt-4">
   <% if notice %>
@@ -13,11 +13,11 @@
 
   <div class="d-flex justify-content-between">
     <div>
-      <%= link_to "Voltar para funcionarios", funcionarios_path, class: "btn btn-secondary" %>
+      <%= link_to "Voltar para funcionários", funcionarios_path, class: "btn btn-secondary" %>
     </div>
     <div class="d-flex">
-      <%= link_to "Editar funcionario", edit_funcionario_path(@funcionario), class: "btn btn-warning me-2" %>
-      <%= button_to "Excluir funcionario", @funcionario, method: :delete, data: { confirm: "Tem certeza de que deseja excluir este funcionario?" }, class: "btn btn-danger" %>
+      <%= link_to "Editar funcionário", edit_funcionario_path(@funcionario), class: "btn btn-warning me-2" %>
+      <%= confirm_delete_button "Excluir funcionário", @funcionario, { class: "btn btn-danger" } %>
     </div>
   </div>
 </div>

@@ -28,12 +28,9 @@
         <td><%= link_to "Exibir", servico, class: "btn btn-info btn-sm" %></td>
         <td><%= link_to "Editar", edit_servico_path(servico), class: "btn btn-warning btn-sm" %></td>
         <td>
-          <%= link_to "Excluir", servico, method: :delete, data: { confirm: "Tem certeza que deseja excluir este serviço?" }, class: "btn btn-danger btn-sm" %>
+          <%= confirm_delete_button "Excluir", servico, { class: "btn btn-danger btn-sm" } %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-
-

@@ -1,0 +1,17 @@
+<% content_for :title, "Nova venda" %>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <div class="d-flex align-items-center mb-4">
+        <%= link_to "Voltar", venda_servicos_path, class: "btn btn-secondary me-3" %>
+        <div class="flex-grow-1 text-center">
+          <h1>Nova venda</h1>
+        </div>
+        <div class="fixed-size-div"></div>
+      </div>
+
+      <%= render "form", venda_servico: @venda_servico %>
+    </div>
+  </div>
+</div>

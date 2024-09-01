@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     resources :clientes
     resources :veiculos
     resources :pecas
+    resources :venda_servicos
     resources :agendamentos do
       patch :update_status, on: :collection
     end

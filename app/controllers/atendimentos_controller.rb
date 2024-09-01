@@ -3,7 +3,12 @@ class AtendimentosController < ApplicationController
 
   # GET /atendimentos or /atendimentos.json
   def index
-    @atendimentos = Atendimento.all
+    if current_user.admin?
+      @atendimentos = Atendimento.all
+    else
+      @atendimentos = Atendimento.joins(:veiculo)
+                                 .where(veiculos: { cliente_id: current_user.cliente_id })
+    end
   end
 
   # GET /atendimentos/1 or /atendimentos/1.json

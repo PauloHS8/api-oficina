@@ -1,5 +1,6 @@
 class VeiculosController < ApplicationController
   before_action :set_veiculo, only: %i[ show edit update destroy ]
+  before_action :load_clientes, only: %i[ new create edit update ]
 
   # GET /veiculos or /veiculos.json
   def index
@@ -63,6 +64,10 @@ class VeiculosController < ApplicationController
       @veiculo = Veiculo.find(params[:id])
     rescue ActiveRecord::RecordNotFound
       redirect_to veiculos_path, notice: "Veículo não encontrado."
+    end
+
+    def load_clientes
+      @clientes = current_user.admin? ? Cliente.all : Cliente.where(id: current_user.cliente_id)
     end
 
     # Only allow a list of trusted parameters through.

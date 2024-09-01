@@ -50,11 +50,18 @@ class VeiculosController < ApplicationController
 
   # DELETE /veiculos/1 or /veiculos/1.json
   def destroy
-    @veiculo.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to veiculos_url, notice: "Veiculo excluído com sucesso." }
-      format.json { head :no_content }
+    begin
+      @veiculo.destroy!
+      respond_to do |format|
+        format.html { redirect_to veiculos_url, notice: "Veículo excluído com sucesso." }
+        format.json { head :no_content }
+      end
+    rescue ActiveRecord::InvalidForeignKey => e
+      error_message = "Não é possível excluir o veículo devido a associações existentes."
+      respond_to do |format|
+        format.html { redirect_to veiculos_url, alert: error_message }
+        format.json { render json: { error: error_message }, status: :unprocessable_entity }
+      end
     end
   end
 

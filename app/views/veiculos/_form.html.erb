@@ -42,7 +42,7 @@
 
   <div class="mb-3">
     <%= form.label :cliente_id, "Cliente", class: "form-label" %>
-    <%= form.collection_select :cliente_id, Cliente.all, :id, :nome, { prompt: "Selecione um cliente" }, { class: "form-select" } %>
+    <%= form.collection_select :cliente_id, clientes, :id, :nome, { prompt: "Selecione um cliente" }, { class: "form-select" } %>
   </div>
 
   <div class="text-end mt-3">

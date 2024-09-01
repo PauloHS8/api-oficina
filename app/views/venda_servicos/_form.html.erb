@@ -1,0 +1,79 @@
+<%= form_with(model: venda_servico, local: true) do |form| %>
+  <% if venda_servico.errors.any? %>
+    <div class="alert alert-danger">
+      <h4><%= pluralize(venda_servico.errors.count, "erro") %> <%= "encontrado".pluralize(venda_servico.errors.count) %>:</h4>
+
+      <ul>
+        <% venda_servico.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+  <div class="mb-3">
+    <%= form.label :cliente_id, class: "form-label" %>
+    <%= form.collection_select :cliente_id, Cliente.all, :id, :nome, {prompt: "Selecione um cliente"}, {class: 'form-select'} %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :veiculo_id, "Veículo", class: "form-label" %>
+    <%= form.collection_select :veiculo_id, [], :id, :modelo, {prompt: "Selecione um veículo"}, {class: 'form-select', id: 'veiculo_select'} %>
+  </div>
+
+
+  <div class="mb-3">
+    <%= form.label :servico_id, class: "form-label" %>
+    <%= form.collection_select :servico_id, Servico.all, :id, :nome, {prompt: "Selecione um serviço"}, {class: 'form-select'}  %>
+  </div>
+
+  <div class="text-center">
+    <%= form.submit "Salvar", class: "btn btn-primary" %>
+  </div>
+<% end %>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+  const clienteSelect = document.querySelector("select[name='venda_servico[cliente_id]']");
+  const veiculoSelect = document.querySelector("#veiculo_select");
+
+  // Função para carregar veículos com base no cliente selecionado
+  const loadVeiculos = (clienteId) => {
+    if (clienteId) {
+      fetch(`/clientes/${clienteId}/veiculos`)
+        .then(response => response.json())
+        .then(veiculos => {
+          veiculoSelect.innerHTML = '<option value="">Selecione um veículo</option>';
+          veiculos.forEach(veiculo => {
+            const option = document.createElement("option");
+            option.value = veiculo.id;
+            option.textContent = `${veiculo.placa} - ${veiculo.modelo}`;
+            veiculoSelect.appendChild(option);
+          });
+
+          // Selecionar o veículo atual
+          const selectedVeiculo = veiculoSelect.getAttribute("data-selected");
+          if (selectedVeiculo) {
+            veiculoSelect.value = selectedVeiculo;
+          }
+        });
+    } else {
+      veiculoSelect.innerHTML = '<option value="">Selecione um veículo</option>';
+    }
+  };
+
+  // Carregar veículos ao carregar a página se um cliente já estiver selecionado
+  const selectedClienteId = clienteSelect.value;
+  if (selectedClienteId) {
+    loadVeiculos(selectedClienteId);
+  }
+
+  // Carregar veículos quando o cliente for alterado
+  clienteSelect.addEventListener("change", (event) => {
+    loadVeiculos(event.target.value);
+  });
+});
+</script>
+

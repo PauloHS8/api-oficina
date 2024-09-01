@@ -110,6 +110,20 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_31_191651) do
     t.index ["cliente_id"], name: "index_veiculos_on_cliente_id"
   end
 
+  create_table "venda_servicos", force: :cascade do |t|
+    t.integer "servico_id", null: false
+    t.integer "cliente_id", null: false
+    t.integer "veiculo_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cliente_id"], name: "index_venda_servicos_on_cliente_id"
+    t.index ["servico_id"], name: "index_venda_servicos_on_servico_id"
+    t.index ["veiculo_id"], name: "index_venda_servicos_on_veiculo_id"
+  end
+
   add_foreign_key "atendimentos", "veiculos"
   add_foreign_key "veiculos", "clientes", on_delete: :cascade
+  add_foreign_key "venda_servicos", "clientes"
+  add_foreign_key "venda_servicos", "servicos"
+  add_foreign_key "venda_servicos", "veiculos"
 end

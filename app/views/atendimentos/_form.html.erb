@@ -66,29 +66,4 @@
   </div>
 <% end %>
 
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const clienteSelect = document.querySelector("select[name='atendimento[cliente_id]']");
-        const veiculoSelect = document.querySelector("#veiculo_select");
-
-        clienteSelect.addEventListener("change", (event) => {
-            const clienteId = event.target.value;
-
-            if (clienteId) {
-                fetch(`/clientes/${clienteId}/veiculos`)
-                    .then(response => response.json())
-                    .then(veiculos => {
-                        veiculoSelect.innerHTML = '<option value="">Selecione um veículo</option>';
-                        veiculos.forEach(veiculo => {
-                            const option = document.createElement("option");
-                            option.value = veiculo.id;
-                            option.textContent = `${veiculo.placa} - ${veiculo.modelo}`;
-                            veiculoSelect.appendChild(option);
-                        });
-                    });
-            } else {
-                veiculoSelect.innerHTML = '<option value="">Selecione um veículo</option>';
-            }
-        });
-    });
-</script>
+<%= javascript_include_tag 'cliente_veiculo_select' %>

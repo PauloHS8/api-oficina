@@ -5,61 +5,61 @@ class FuncionarioTest < ActiveSupport::TestCase
     @funcionario = funcionarios(:one)
   end
 
-  test "should be valid with valid attributes" do
+  test "deve ser válido com atributos válidos" do
     assert @funcionario.valid?
   end
 
-  test "should not be valid without matricula" do
+  test "não deve ser válido sem matrícula" do
     @funcionario.matricula = nil
-    assert_not @funcionario.valid?
+    assert_not @funcionario.save
     assert_includes @funcionario.errors[:matricula], "não pode ficar em branco"
   end
 
-  test "should not be valid without nome" do
+  test "não deve ser válido sem nome" do
     @funcionario.nome = nil
-    assert_not @funcionario.valid?
+    assert_not @funcionario.save
     assert_includes @funcionario.errors[:nome], "não pode ficar em branco"
   end
 
-  test "should not be valid with short nome" do
+  test "não deve ser válido com nome muito curto" do
     @funcionario.nome = "Jo"
-    assert_not @funcionario.valid?
+    assert_not @funcionario.save
     assert_includes @funcionario.errors[:nome], "é muito curto (mínimo: 3 caracteres)"
   end
 
-  test "should not be valid without cargo" do
+  test "não deve ser válido sem cargo" do
     @funcionario.cargo = nil
-    assert_not @funcionario.valid?
+    assert_not @funcionario.save
     assert_includes @funcionario.errors[:cargo], "não pode ficar em branco"
   end
 
-  test "should not be valid without email" do
+  test "não deve ser válido sem email" do
     @funcionario.email = nil
-    assert_not @funcionario.valid?
+    assert_not @funcionario.save
     assert_includes @funcionario.errors[:email], "não pode ficar em branco"
   end
 
-  test "should not be valid without salario" do
+  test "não deve ser válido sem salário" do
     @funcionario.salario = nil
-    assert_not @funcionario.valid?
+    assert_not @funcionario.save
     assert_includes @funcionario.errors[:salario], "não pode ficar em branco"
   end
 
-  test "should not be valid without data_admissao" do
+  test "não deve ser válido sem data de admissão" do
     @funcionario.data_admissao = nil
-    assert_not @funcionario.valid?
+    assert_not @funcionario.save
     assert_includes @funcionario.errors[:data_admissao], "não pode ficar em branco"
   end
 
-  test "should not be valid without cpf" do
+  test "não deve ser válido sem CPF" do
     @funcionario.cpf = nil
-    assert_not @funcionario.valid?
+    assert_not @funcionario.save
     assert_includes @funcionario.errors[:cpf], "não pode ficar em branco"
   end
 
-  test "should not be valid with incorrect cpf length" do
+  test "não deve ser válido com tamanho de CPF incorreto" do
     @funcionario.cpf = "1234567890"  # CPF com 10 dígitos, inválido
-    assert_not @funcionario.valid?
+    assert_not @funcionario.save
     assert_includes @funcionario.errors[:cpf], "é muito curto (mínimo: 11 caracteres)"
   end
 end

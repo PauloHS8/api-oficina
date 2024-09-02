@@ -1,8 +1,14 @@
 class AtendimentosController < ApplicationController
   before_action :set_atendimento, only: %i[ show edit update destroy ]
+
   # GET /atendimentos or /atendimentos.json
   def index
-    @atendimentos = Atendimento.all
+    if current_user.admin?
+      @atendimentos = Atendimento.all
+    else
+      @atendimentos = Atendimento.joins(:veiculo)
+                                 .where(veiculos: { cliente_id: current_user.cliente_id })
+    end
   end
 
   # GET /atendimentos/1 or /atendimentos/1.json
@@ -58,15 +64,17 @@ class AtendimentosController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_atendimento
-      @atendimento = Atendimento.includes(veiculo: :cliente).find(params[:id])
-    rescue ActiveRecord::RecordNotFound
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_atendimento
+    @atendimento = Atendimento.find_by(id: params[:id])
+    if @atendimento.nil?
       redirect_to atendimentos_path, notice: "Atendimento não encontrado."
     end
+  end
 
-    # Only allow a list of trusted parameters through.
-    def atendimento_params
-      params.require(:atendimento).permit(:data_inicio, :data_termino, :status, :veiculo_id, funcionario_ids: [])
-    end
+  # Only allow a list of trusted parameters through.
+  def atendimento_params
+    params.require(:atendimento).permit(:data_inicio, :data_termino, :status, :veiculo_id, funcionario_ids: [])
+  end
 end

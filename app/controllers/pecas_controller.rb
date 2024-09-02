@@ -1,4 +1,4 @@
-class PecasController < ApplicationController
+class PecasController < AdminController
   before_action :set_peca, only: %i[ show edit update destroy ]
 
   # GET /pecas or /pecas.json
@@ -58,15 +58,17 @@ class PecasController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_peca
-      @peca = Peca.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
-      redirect_to pecas_path, notice: "Peça não encontrada."
-    end
 
-    # Only allow a list of trusted parameters through.
-    def peca_params
-      params.require(:peca).permit(:codigo, :nome, :preco, :tipo, :fabricante, :data_validade)
+# Use callbacks to share common setup or constraints between actions.
+  def set_peca
+    @peca = Peca.find_by(id: params[:id])
+    if @peca.nil?
+     redirect_to pecas_path, notice: "Peça não encontrada."
     end
+  end
+
+  # Only allow a list of trusted parameters through.
+  def peca_params
+    params.require(:peca).permit(:codigo, :nome, :preco, :tipo, :fabricante, :data_validade)
+  end
 end

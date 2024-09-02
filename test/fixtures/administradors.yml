@@ -1,8 +1,0 @@
-# test/fixtures/administradors.yml
-one:
-  email: emailvalido@gmail.com
-  senha: senhavalidaaaaa
-
-two:
-  email: outroemail@gmail.com
-  senha: outrasenhaaaaaa

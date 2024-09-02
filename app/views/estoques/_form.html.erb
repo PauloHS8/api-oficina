@@ -20,6 +20,11 @@
     <%= form.number_field :quantidade, class: "form-control" %>
   </div>
 
+  <div class="mb-3">
+    <%= form.label :peca_id, "Peça", class: "form-label" %>
+    <%= form.collection_select :peca_id, pecas, :id, :nome, { prompt: "Selecione uma peça" }, { class: "form-select" } %>
+  </div>
+
   <div class="text-end">
     <%= form.submit "Salvar", class: "btn btn-primary" %>
   </div>

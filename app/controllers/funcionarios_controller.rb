@@ -1,4 +1,4 @@
-class FuncionariosController < ApplicationController
+class FuncionariosController < AdminController
   before_action :set_funcionario, only: %i[ show edit update destroy ]
 
   # GET /funcionarios or /funcionarios.json
@@ -58,15 +58,17 @@ class FuncionariosController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_funcionario
-      @funcionario = Funcionario.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_funcionario
+    @funcionario = Funcionario.find_by(id: params[:id])
+    if @funcionario.nil?
       redirect_to funcionarios_path, notice: "Funcionário não encontrado."
     end
+  end
 
-    # Only allow a list of trusted parameters through.
-    def funcionario_params
-      params.require(:funcionario).permit(:matricula, :nome, :cargo, :email, :salario, :data_admissao, :cpf)
-    end
+  # Only allow a list of trusted parameters through.
+  def funcionario_params
+    params.require(:funcionario).permit(:matricula, :nome, :cargo, :email, :salario, :data_admissao, :cpf)
+  end
 end

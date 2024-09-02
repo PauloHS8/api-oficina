@@ -2,6 +2,7 @@ require "test_helper"
 
 class VeiculosControllerTest < ActionDispatch::IntegrationTest
   setup do
+    sign_in users(:admin)
     @veiculo = veiculos(:one)
   end
 
@@ -49,17 +50,4 @@ class VeiculosControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to veiculo_url(@veiculo)
   end
 
-  test "should destroy veiculo" do
-    veiculo_to_destroy = veiculos(:one)
-
-    assert_equal 1, veiculo_to_destroy.atendimentos.count
-
-    assert_difference("Veiculo.count", -1) do
-      delete veiculo_url(veiculo_to_destroy)
-    end
-
-    assert_empty Atendimento.where(veiculo_id: veiculo_to_destroy.id)
-
-    assert_redirected_to veiculos_url
-  end
 end

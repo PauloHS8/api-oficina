@@ -1,6 +1,7 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  id: 1
   codigo: P1234
   nome: Filtro de Oleo
   preco: 49.90
@@ -9,6 +10,7 @@ one:
   data_validade: 2024-08-11
 
 two:
+  id: 2
   codigo: A5678
   nome: Pastilha de Freio Dianteira
   preco: 89.90

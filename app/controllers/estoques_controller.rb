@@ -1,5 +1,6 @@
-class EstoquesController < ApplicationController
-  before_action :set_estoque, only: %i[ show edit update destroy ]
+class EstoquesController < AdminController
+  before_action :set_estoque, only: %i[show edit update destroy]
+  before_action :load_pecas, only: %i[new create edit update]
 
   # GET /estoques or /estoques.json
   def index
@@ -49,7 +50,7 @@ class EstoquesController < ApplicationController
 
   # DELETE /estoques/1 or /estoques/1.json
   def destroy
-    @estoque.destroy!
+    @estoque.destroy
 
     respond_to do |format|
       format.html { redirect_to estoques_url, notice: "Estoque excluído com sucesso." }
@@ -58,15 +59,21 @@ class EstoquesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_estoque
-      @estoque = Estoque.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_estoque
+    @estoque = Estoque.find_by(id: params[:id])
+    if @estoque.nil?
       redirect_to estoques_path, notice: "Estoque não encontrado."
     end
+  end
 
-    # Only allow a list of trusted parameters through.
-    def estoque_params
-      params.require(:estoque).permit(:codigo, :quantidade)
-    end
+  # Only allow a list of trusted parameters through.
+  def estoque_params
+    params.require(:estoque).permit(:codigo, :quantidade, :peca_id)
+  end
+
+  def load_pecas
+    @pecas = Peca.all
+  end
 end

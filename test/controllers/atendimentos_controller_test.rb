@@ -2,6 +2,7 @@ require "test_helper"
 
 class AtendimentosControllerTest < ActionDispatch::IntegrationTest
   setup do
+    sign_in users(:admin)
     @atendimento = atendimentos(:one)
   end
 

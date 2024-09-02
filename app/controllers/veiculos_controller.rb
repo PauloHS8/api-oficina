@@ -1,9 +1,14 @@
 class VeiculosController < ApplicationController
   before_action :set_veiculo, only: %i[ show edit update destroy ]
+  before_action :load_clientes, only: %i[ new create edit update ]
 
   # GET /veiculos or /veiculos.json
   def index
-    @veiculos = Veiculo.all
+    if current_user.admin?
+      @veiculos = Veiculo.all
+    else
+      @veiculos = current_user.cliente.veiculos
+    end
   end
 
   # GET /veiculos/1 or /veiculos/1.json
@@ -49,24 +54,37 @@ class VeiculosController < ApplicationController
 
   # DELETE /veiculos/1 or /veiculos/1.json
   def destroy
-    @veiculo.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to veiculos_url, notice: "Veiculo excluído com sucesso." }
-      format.json { head :no_content }
+    begin
+      @veiculo.destroy!
+      respond_to do |format|
+        format.html { redirect_to veiculos_url, notice: "Veículo excluído com sucesso." }
+        format.json { head :no_content }
+      end
+    rescue ActiveRecord::InvalidForeignKey => e
+      error_message = "Não é possível excluir o veículo devido a associações existentes."
+      respond_to do |format|
+        format.html { redirect_to veiculos_url, alert: error_message }
+        format.json { render json: { error: error_message }, status: :unprocessable_entity }
+      end
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_veiculo
-      @veiculo = Veiculo.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_veiculo
+    @veiculo = Veiculo.find_by(id: params[:id])
+    if @veiculo.nil?
       redirect_to veiculos_path, notice: "Veículo não encontrado."
     end
+  end
 
-    # Only allow a list of trusted parameters through.
-    def veiculo_params
-      params.require(:veiculo).permit(:placa, :modelo, :ano, :cor, :quilometragem, :chassi, :cliente_id)
-    end
+  def load_clientes
+    @clientes = current_user.admin? ? Cliente.all : Cliente.where(id: current_user.cliente_id)
+  end
+
+  # Only allow a list of trusted parameters through.
+  def veiculo_params
+    params.require(:veiculo).permit(:placa, :modelo, :ano, :cor, :quilometragem, :chassi, :cliente_id)
+  end
 end

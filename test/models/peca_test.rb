@@ -5,62 +5,62 @@ class PecaTest < ActiveSupport::TestCase
     @peca = pecas(:one)
   end
 
-  test "should be valid with valid attributes" do
+  test "deve ser peça válida" do
     assert @peca.valid?
   end
 
-  test "should not be valid without codigo" do
+  test "não deve ser válido sem código" do
     @peca.codigo = nil
-    assert_not @peca.valid?
+    assert_not @peca.save
     assert_includes @peca.errors[:codigo], "não pode ficar em branco"
   end
 
-  test "should not be valid with duplicate codigo" do
-    duplicate_peca = @peca.dup
+  test "não deve ser válido com código duplicado" do
+    peca_duplicada = @peca.dup
     @peca.save
-    assert_not duplicate_peca.valid?
-    assert_includes duplicate_peca.errors[:codigo], "já está em uso"
+    assert_not peca_duplicada.save
+    assert_includes peca_duplicada.errors[:codigo], "já está em uso"
   end
 
-  test "should not be valid without nome" do
+  test "não deve ser válido sem nome" do
     @peca.nome = nil
-    assert_not @peca.valid?
+    assert_not @peca.save
     assert_includes @peca.errors[:nome], "não pode ficar em branco"
   end
 
-  test "should not be valid with short nome" do
+  test "não deve ser válido com nome muito curto" do
     @peca.nome = "A"
-    assert_not @peca.valid?
+    assert_not @peca.save
     assert_includes @peca.errors[:nome], "é muito curto (mínimo: 2 caracteres)"
   end
 
-  test "should not be valid with long nome" do
+  test "não deve ser válido com nome muito longo" do
     @peca.nome = "A" * 21
-    assert_not @peca.valid?
+    assert_not @peca.save
     assert_includes @peca.errors[:nome], "é muito longo (máximo: 20 caracteres)"
   end
 
-  test "should not be valid without preco" do
+  test "não deve ser válido sem preço" do
     @peca.preco = nil
-    assert_not @peca.valid?
+    assert_not @peca.save
     assert_includes @peca.errors[:preco], "não pode ficar em branco"
   end
 
-  test "should not be valid without tipo" do
+  test "não deve ser válido sem tipo" do
     @peca.tipo = nil
-    assert_not @peca.valid?
+    assert_not @peca.save
     assert_includes @peca.errors[:tipo], "não pode ficar em branco"
   end
 
-  test "should not be valid without fabricante" do
+  test "não deve ser válido sem fabricante" do
     @peca.fabricante = nil
-    assert_not @peca.valid?
+    assert_not @peca.save
     assert_includes @peca.errors[:fabricante], "não pode ficar em branco"
   end
 
-  test "should not be valid without data_validade" do
+  test "não deve ser válido sem data de validade" do
     @peca.data_validade = nil
-    assert_not @peca.valid?
+    assert_not @peca.save
     assert_includes @peca.errors[:data_validade], "não pode ficar em branco"
   end
 end

@@ -1,4 +1,5 @@
 class Cliente < ApplicationRecord
+  has_one :user, dependent: :destroy
   has_many :veiculos, dependent: :destroy
 
   validates :nome, presence: true, length: { in: 3..80 }

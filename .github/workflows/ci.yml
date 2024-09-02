@@ -53,5 +53,13 @@ jobs:
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
           WITH_COVERAGE: true
           DISABLE_SPRING: 1
+          MAILER_USER_NAME: ${{ secrets.MAILER_USER_NAME }}
+          MAILER_PASSWORD: ${{ secrets.MAILER_PASSWORD }}
+          MAILER_ADDRESS: ${{ secrets.MAILER_ADDRESS }}
+          MAILER_PORT: ${{ secrets.MAILER_PORT }}
+          ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
+          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
         run: |
           bundle exec rails db:prepare
+          bundle exec rails db:migrate RAILS_ENV=test
+          bundle exec rails test

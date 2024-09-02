@@ -1,0 +1,12 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+admin:
+  email: 'admin@admin.com'
+  encrypted_password: <%= Devise::Encryptor.digest(User, '123456') %>
+  role: admin
+
+cliente:
+  email: 'cliente@cliente.com'
+  encrypted_password: <%= Devise::Encryptor.digest(User, '123456') %>
+  role: cliente
+  cliente_id: 1

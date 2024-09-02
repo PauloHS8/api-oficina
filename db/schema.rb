@@ -10,18 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_08_17_220636) do
-  create_table "administradors", force: :cascade do |t|
-    t.string "email"
-    t.string "senha"
+ActiveRecord::Schema[7.2].define(version: 2024_09_01_220934) do
+  create_table "agendamentos", force: :cascade do |t|
+    t.integer "veiculo_id", null: false
+    t.integer "servico_id", null: false
+    t.integer "status", default: 0, null: false
+    t.date "data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["servico_id"], name: "index_agendamentos_on_servico_id"
+    t.index ["veiculo_id"], name: "index_agendamentos_on_veiculo_id"
   end
 
   create_table "atendimentos", force: :cascade do |t|
     t.datetime "data_inicio"
     t.datetime "data_termino"
-    t.string "status"
+    t.integer "status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "veiculo_id", null: false
@@ -50,21 +54,18 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_17_220636) do
     t.integer "quantidade"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "estoques_pecas", id: false, force: :cascade do |t|
-    t.integer "estoque_id", null: false
     t.integer "peca_id", null: false
+    t.index ["peca_id"], name: "index_estoques_on_peca_id"
   end
 
   create_table "funcionarios", force: :cascade do |t|
     t.string "matricula"
     t.string "nome"
+    t.string "cpf"
     t.string "cargo"
     t.string "email"
     t.decimal "salario"
     t.date "data_admissao"
-    t.string "cpf"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -89,6 +90,21 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_17_220636) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "users", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "role", default: 0
+    t.integer "cliente_id"
+    t.index ["cliente_id"], name: "index_users_on_cliente_id"
+    t.index ["email"], name: "index_users_on_email"
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token"
+  end
+
   create_table "veiculos", force: :cascade do |t|
     t.string "placa"
     t.string "modelo"
@@ -102,6 +118,23 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_17_220636) do
     t.index ["cliente_id"], name: "index_veiculos_on_cliente_id"
   end
 
+  create_table "venda_servicos", force: :cascade do |t|
+    t.integer "servico_id", null: false
+    t.integer "cliente_id", null: false
+    t.integer "veiculo_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cliente_id"], name: "index_venda_servicos_on_cliente_id"
+    t.index ["servico_id"], name: "index_venda_servicos_on_servico_id"
+    t.index ["veiculo_id"], name: "index_venda_servicos_on_veiculo_id"
+  end
+
+  add_foreign_key "agendamentos", "servicos"
+  add_foreign_key "agendamentos", "veiculos"
   add_foreign_key "atendimentos", "veiculos"
-  add_foreign_key "veiculos", "clientes"
+  add_foreign_key "estoques", "pecas"
+  add_foreign_key "veiculos", "clientes", on_delete: :cascade
+  add_foreign_key "venda_servicos", "clientes"
+  add_foreign_key "venda_servicos", "servicos"
+  add_foreign_key "venda_servicos", "veiculos"
 end

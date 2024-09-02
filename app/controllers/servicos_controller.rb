@@ -1,4 +1,4 @@
-class ServicosController < ApplicationController
+class ServicosController < AdminController
   before_action :set_servico, only: %i[ show edit update destroy ]
 
   # GET /servicos or /servicos.json
@@ -50,7 +50,6 @@ class ServicosController < ApplicationController
   # DELETE /servicos/1 or /servicos/1.json
   def destroy
     @servico.destroy!
-
     respond_to do |format|
       format.html { redirect_to servicos_url, notice: "Servico excluído com sucesso." }
       format.json { head :no_content }
@@ -58,15 +57,17 @@ class ServicosController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_servico
-      @servico = Servico.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_servico
+    @servico = Servico.find_by(id: params[:id])
+    if @servico.nil?
       redirect_to servicos_path, notice: "Serviço não encontrado."
     end
+  end
 
-    # Only allow a list of trusted parameters through.
-    def servico_params
-      params.require(:servico).permit(:codigo, :nome, :descricao, :preco)
-    end
+  # Only allow a list of trusted parameters through.
+  def servico_params
+    params.require(:servico).permit(:codigo, :nome, :descricao, :preco)
+  end
 end

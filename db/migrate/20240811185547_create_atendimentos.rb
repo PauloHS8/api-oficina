@@ -3,7 +3,7 @@ class CreateAtendimentos < ActiveRecord::Migration[7.2]
     create_table :atendimentos do |t|
       t.datetime :data_inicio
       t.datetime :data_termino
-      t.string :status
+      t.integer :status, default: 0, null: false
 
       t.timestamps
     end

@@ -4,25 +4,65 @@
   <div class="row">
     <div class="col text-center">
       <h1 class="display-4">Gerenciamento de Oficina de Automóveis</h1>
-      <h3>Bem-vindo, <%= current_user.cliente.nome %></h3>
     </div>
   </div>
+
   <div class="row justify-content-center mt-4">
-    <div class="col-md-8">
-      <ul class="list-group">
-        <li class="list-group-item list-group-item-action">
-          <%= link_to "Histórico de atendimentos", atendimentos_path, class: "text-decoration-none text-dark" %>
-        </li>
-        <li class="list-group-item list-group-item-action">
-          <%= link_to "Agendamentos", agendamentos_path, class: "text-decoration-none text-dark" %>
-        </li>
-        <li class="list-group-item list-group-item-action">
-          <%= link_to "Veículos", veiculos_path, class: "text-decoration-none text-dark" %>
-        </li>
-        <li class="list-group-item list-group-item-action">
-          <%= link_to "Histórico serviços", venda_servicos_path, class: "text-decoration-none text-dark" %>
-        </li>
-      </ul>
+
+    <div class="col-md-3 mb-4">
+      <a href="<%= atendimentos_path %>" class="text-decoration-none card-hover">
+        <div class="card p-4 text-center shadow-sm">
+          <i class="fas fa-tools fa-3x text-success mb-3"></i>
+          <h5 class="card-title text-dark">Histórico de atendimentos</h5>
+        </div>
+      </a>
+    </div>
+
+
+    <div class="col-md-3 mb-4">
+      <a href="<%= agendamentos_path %>" class="text-decoration-none card-hover">
+        <div class="card p-4 text-center shadow-sm">
+          <i class="fas fa-calendar-alt fa-3x text-success mb-3"></i>
+          <h5 class="card-title text-dark">Agendamentos</h5>
+        </div>
+      </a>
+    </div>
+
+
+    <div class="col-md-3 mb-4">
+      <a href="<%= veiculos_path %>" class="text-decoration-none card-hover">
+        <div class="card p-4 text-center shadow-sm">
+          <i class="fas fa-car fa-3x text-success mb-3"></i>
+          <h5 class="card-title text-dark">Veículos</h5>
+        </div>
+      </a>
+    </div>
+
+
+    <div class="col-md-3 mb-4">
+      <a href="<%= venda_servicos_path %>" class="text-decoration-none card-hover">
+        <div class="card p-4 text-center shadow-sm">
+          <i class="fas fa-dollar-sign fa-3x text-success mb-3"></i>
+          <h5 class="card-title text-dark">Histórico serviços</h5>
+        </div>
+      </a>
     </div>
   </div>
 </div>
+
+<style>
+
+    .card-hover .card {
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+    .card-hover:hover .card {
+        background-color: #007bff;
+        color: #ffffff;
+    }
+
+    .card-hover:hover .card .card-title {
+        color: #ffffff;
+    }
+</style>
+

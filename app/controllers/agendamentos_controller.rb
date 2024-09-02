@@ -1,9 +1,10 @@
 class AgendamentosController < ApplicationController
-  before_action :set_agendamento, only: %i[show edit update destroy update_status]
+  before_action :set_agendamento, only: %i[show edit update destroy]
   before_action :set_veiculos, only: %i[new edit create update]
 
   # GET /agendamentos or /agendamentos.json
   def index
+    @funcionarios = Funcionario.all
     if current_user.admin?
       @agendamentos = Agendamento.all
     else
@@ -68,30 +69,20 @@ class AgendamentosController < ApplicationController
     new_status = params[:status]
 
     if Agendamento.statuses.keys.include?(new_status) && @agendamento.update(status: new_status)
-      if new_status == "confirmado"
-        atendimento = Atendimento.create!(
-          veiculo: @agendamento.veiculo,
-          data_inicio: @agendamento.data,
-          data_termino: @agendamento.data,
-          status: :agendado
-        )
-
-        # Associa os funcionários selecionados ao atendimento
-        funcionarios_ids = params[:funcionario_ids] || []
-        atendimento.funcionarios << Funcionario.where(id: funcionarios_ids.reject(&:blank?))
-      end
-
-      redirect_to atendimentos_url, notice: "Agendamento aprovado, um atendimento foi agendado com sucesso."
+      notice_message = handle_status_change(new_status)
+      redirect_to agendamentos_path, notice: notice_message
     else
       redirect_to agendamentos_url, alert: "Não foi possível atualizar o status do agendamento."
     end
   end
 
-
   private
 
   def set_agendamento
     @agendamento = Agendamento.find_by(id: params[:id])
+    if @agendamento.nil?
+      redirect_to atendimentos_path, notice: "Agendamento não encontrado."
+    end
   end
 
   def set_veiculos
@@ -104,5 +95,23 @@ class AgendamentosController < ApplicationController
 
   def agendamento_params
     params.require(:agendamento).permit(:veiculo_id, :servico_id, :status, :data)
+  end
+
+  def handle_status_change(status)
+    if status == "confirmado"
+      atendimento = Atendimento.create!(
+        veiculo: @agendamento.veiculo,
+        data_inicio: @agendamento.data,
+        data_termino: @agendamento.data,
+        status: :agendado
+      )
+
+      funcionarios_ids = params[:funcionario_ids] || []
+      atendimento.funcionarios << Funcionario.where(id: funcionarios_ids.reject(&:blank?))
+
+      "Agendamento aprovado. O atendimento logo será agendado."
+    else
+      "Agendamento reprovado."
+    end
   end
 end

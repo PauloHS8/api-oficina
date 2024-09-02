@@ -48,22 +48,17 @@ class VendaServicosController < ApplicationController
   end
 
   # DELETE /venda_servicos/1 or /venda_servicos/1.json
-  begin
+  def destroy
     @venda_servico.destroy!
     respond_to do |format|
-      format.html { redirect_to venda_servicos_url, notice: I18n.t('notices.venda_servico_destroyed') }
+      format.html { redirect_to venda_servicos_url, notice: "Venda excluída com sucesso." }
       format.json { head :no_content }
-    end
-  rescue ActiveRecord::RecordNotDestroyed => e
-    respond_to do |format|
-      format.html { redirect_to venda_servicos_url, alert: "Erro ao excluir a venda: #{e.message}" }
-      format.json { render json: { error: e.message }, status: :unprocessable_entity }
     end
   end
 
-
   private
-    # Use callbacks to share common setup or constraints between actions.
+
+  # Use callbacks to share common setup or constraints between actions.
   def set_venda_servico
     @venda_servico = VendaServico.find_by(id: params[:id])
     if @venda_servico.nil?
@@ -72,7 +67,7 @@ class VendaServicosController < ApplicationController
   end
 
   # Only allow a list of trusted parameters through.
-    def venda_servico_params
-      params.require(:venda_servico).permit(:servico_id, :veiculo_id, :cliente_id)
-    end
+  def venda_servico_params
+    params.require(:venda_servico).permit(:servico_id, :veiculo_id, :cliente_id)
+  end
 end

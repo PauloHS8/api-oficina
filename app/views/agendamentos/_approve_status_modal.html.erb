@@ -1,0 +1,31 @@
+<!-- Modal -->
+<div class="modal fade" id="approveStatusModal" tabindex="-1" aria-labelledby="approveStatusModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="approveStatusModalLabel">Aprovar Status do Agendamento</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= form_with url: update_status_agendamentos_path, method: :patch, remote: true, id: "updateStatusForm" do |form| %>
+          <%= hidden_field_tag :agendamento_id, nil, id: "modal_agendamento_id" %>
+          <%= form.hidden_field :status, id: "modal_status_field" %>
+          <%= form.label :funcionario_ids, "Funcionário(s)", class: "form-label" %>
+          <% if @funcionarios.any? %>
+            <%= form.collection_check_boxes :funcionario_ids, @funcionarios, :id, :nome do |b| %>
+              <div class="form-check">
+                <%= b.check_box(class: 'form-check-input') %>
+                <%= b.label(class: 'form-check-label') %>
+              </div>
+            <% end %>
+          <% else %>
+            <p class="text-danger">Nenhum funcionário disponível.</p>
+          <% end %>
+          <div class="modal-footer">
+            <%= form.submit "Confirmar", class: "btn btn-primary", disabled: @funcionarios.none? %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

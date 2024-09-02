@@ -1,9 +1,14 @@
 class VeiculosController < ApplicationController
   before_action :set_veiculo, only: %i[ show edit update destroy ]
+  before_action :load_clientes, only: %i[ new create edit update ]
 
   # GET /veiculos or /veiculos.json
   def index
-    @veiculos = Veiculo.all
+    if current_user.admin?
+      @veiculos = Veiculo.all
+    else
+      @veiculos = current_user.cliente.veiculos
+    end
   end
 
   # GET /veiculos/1 or /veiculos/1.json
@@ -24,10 +29,12 @@ class VeiculosController < ApplicationController
     @veiculo = Veiculo.new(veiculo_params)
 
     respond_to do |format|
-      if @veiculo.present? && current_user.can_access?(@veiculo)
-        format.html { redirect_to veiculo_url(@veiculo), notice: "Veículo cadastrado com sucesso." }
+      if @veiculo.save
+        format.html { redirect_to veiculo_url(@veiculo), notice: "Veiculo cadastrado com sucesso." }
+        format.json { render :show, status: :created, location: @veiculo }
       else
-        format.html { redirect_to root_path, alert: "Acesso negado." }
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @veiculo.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -46,31 +53,36 @@ class VeiculosController < ApplicationController
   end
 
   # DELETE /veiculos/1 or /veiculos/1.json
-  begin
-    @veiculo.destroy!
-    respond_to do |format|
-      format.html { redirect_to veiculos_url, notice: "Veículo excluído com sucesso." }
-      format.json { head :no_content }
-    end
-  rescue ActiveRecord::RecordNotDestroyed => e
-    respond_to do |format|
-      format.html { redirect_to veiculos_url, alert: "Erro ao excluir o veículo: #{e.message}" }
-      format.json { render json: { error: e.message }, status: :unprocessable_entity }
+  def destroy
+    begin
+      @veiculo.destroy!
+      respond_to do |format|
+        format.html { redirect_to veiculos_url, notice: "Veículo excluído com sucesso." }
+        format.json { head :no_content }
+      end
+    rescue ActiveRecord::InvalidForeignKey => e
+      error_message = "Não é possível excluir o veículo devido a associações existentes."
+      respond_to do |format|
+        format.html { redirect_to veiculos_url, alert: error_message }
+        format.json { render json: { error: error_message }, status: :unprocessable_entity }
+      end
     end
   end
-
 
   private
-end
-# Use callbacks to share common setup or constraints between actions.
-def set_veiculo
-  @veiculo = Veiculo.find_by(id: params[:id])
-  if @veiculo.nil?
-    redirect_to veiculos_path, notice: "Veículo não encontrado."
-  end
+    # Use callbacks to share common setup or constraints between actions.
+    def set_veiculo
+      @veiculo = Veiculo.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to veiculos_path, notice: "Veículo não encontrado."
+    end
 
-  # Only allow a list of trusted parameters through.
-  def veiculo_params
-    params.require(:veiculo).permit(:placa, :modelo, :ano, :cor, :quilometragem, :chassi, :cliente_id)
-  end
+    def load_clientes
+      @clientes = current_user.admin? ? Cliente.all : Cliente.where(id: current_user.cliente_id)
+    end
+
+    # Only allow a list of trusted parameters through.
+    def veiculo_params
+      params.require(:veiculo).permit(:placa, :modelo, :ano, :cor, :quilometragem, :chassi, :cliente_id)
+    end
 end

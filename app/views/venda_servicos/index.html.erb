@@ -34,7 +34,7 @@
         <td><%= link_to "Exibir", venda_servico, class: "btn btn-info btn-sm" %></td>
         <td><%= link_to "Editar", edit_venda_servico_path(venda_servico), class: "btn btn-warning btn-sm" %></td>
         <td>
-          <%= link_to "Excluir", venda_servico, method: :delete, data: { confirm: "Tem certeza que deseja excluir esta venda?" }, class: "btn btn-danger btn-sm" %>
+          <%= confirm_delete_button "Excluir", venda_servico, { class: "btn btn-danger btn-sm" } %>
         </td>
       </tr>
     <% end %>

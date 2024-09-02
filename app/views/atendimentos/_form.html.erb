@@ -31,11 +31,15 @@
   </div>
 
   <div class="mb-3">
+    <%= form.label :servico_id, class: "form-label" %>
+    <%= form.collection_select :servico_id, Servico.all, :id, :nome, { prompt: "Selecione um serviço" }, { class: 'form-select' } %>
+  </div>
+
+  <div class="mb-3">
     <%= form.label :status, class: "form-label" %>
-    <%= form.select :status, options_for_select([['Agendado', 'agendado'],
-                                                 ['Em andamento', 'andamento'],
-                                                 ['Concluído', 'concluido'],
-                                                 ['Cancelado', 'cancelado']], atendimento.status), { class: "form-select" } %>
+    <%= form.select :status, Atendimento.statuses.keys.map { |status| [status.humanize, status] },
+                    { prompt: "Selecione um status" },
+                    { class: "form-select" } %>
   </div>
 
   <% if Funcionario.any? %>
@@ -63,28 +67,28 @@
 <% end %>
 
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const clienteSelect = document.querySelector("select[name='atendimento[cliente_id]']");
-    const veiculoSelect = document.querySelector("#veiculo_select");
+    document.addEventListener("DOMContentLoaded", () => {
+        const clienteSelect = document.querySelector("select[name='atendimento[cliente_id]']");
+        const veiculoSelect = document.querySelector("#veiculo_select");
 
-    clienteSelect.addEventListener("change", (event) => {
-      const clienteId = event.target.value;
+        clienteSelect.addEventListener("change", (event) => {
+            const clienteId = event.target.value;
 
-      if (clienteId) {
-        fetch(`/clientes/${clienteId}/veiculos`)
-          .then(response => response.json())
-          .then(veiculos => {
-            veiculoSelect.innerHTML = '<option value="">Selecione um veículo</option>';
-            veiculos.forEach(veiculo => {
-              const option = document.createElement("option");
-              option.value = veiculo.id;
-              option.textContent = `${veiculo.placa} - ${veiculo.modelo}`;
-              veiculoSelect.appendChild(option);
-            });
-          });
-      } else {
-        veiculoSelect.innerHTML = '<option value="">Selecione um veículo</option>';
-      }
+            if (clienteId) {
+                fetch(`/clientes/${clienteId}/veiculos`)
+                    .then(response => response.json())
+                    .then(veiculos => {
+                        veiculoSelect.innerHTML = '<option value="">Selecione um veículo</option>';
+                        veiculos.forEach(veiculo => {
+                            const option = document.createElement("option");
+                            option.value = veiculo.id;
+                            option.textContent = `${veiculo.placa} - ${veiculo.modelo}`;
+                            veiculoSelect.appendChild(option);
+                        });
+                    });
+            } else {
+                veiculoSelect.innerHTML = '<option value="">Selecione um veículo</option>';
+            }
+        });
     });
-  });
 </script>

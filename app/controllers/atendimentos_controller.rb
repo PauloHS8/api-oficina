@@ -67,7 +67,7 @@ class AtendimentosController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_atendimento
-    @atendimento = Atendimento.includes(veiculo: :cliente).find_by(id: params[:id])
+    @atendimento = Atendimento.find_by(id: params[:id])
     if @atendimento.nil?
       redirect_to atendimentos_path, notice: "Atendimento não encontrado."
     end

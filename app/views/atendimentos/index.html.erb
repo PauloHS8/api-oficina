@@ -27,7 +27,11 @@
         <td><%= atendimento.veiculo.modelo %> - <%= atendimento.veiculo.cliente.nome %></td>
         <td><%= atendimento.data_inicio.strftime("%d/%m/%Y") %></td>
         <td><%= atendimento.data_termino&.strftime("%d/%m/%Y") %></td>
-        <td><%= atendimento.status %></td>
+        <td>
+          <span class="status-badge <%= status_class(atendimento.status) %>">
+            <%= atendimento.status.humanize %>
+          </span>
+        </td>
         <% if current_user.admin? %>
           <td><%= link_to "Exibir", atendimento, class: "btn btn-info btn-sm" %></td>
           <td><%= link_to "Editar", edit_atendimento_path(atendimento), class: "btn btn-warning btn-sm" %></td>

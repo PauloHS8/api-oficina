@@ -25,7 +25,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_01_220934) do
   create_table "atendimentos", force: :cascade do |t|
     t.datetime "data_inicio"
     t.datetime "data_termino"
-    t.string "status"
+    t.integer "status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "veiculo_id", null: false

@@ -33,47 +33,4 @@
   </div>
 <% end %>
 
-
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-  const clienteSelect = document.querySelector("select[name='venda_servico[cliente_id]']");
-  const veiculoSelect = document.querySelector("#veiculo_select");
-
-  // Função para carregar veículos com base no cliente selecionado
-  const loadVeiculos = (clienteId) => {
-    if (clienteId) {
-      fetch(`/clientes/${clienteId}/veiculos`)
-        .then(response => response.json())
-        .then(veiculos => {
-          veiculoSelect.innerHTML = '<option value="">Selecione um veículo</option>';
-          veiculos.forEach(veiculo => {
-            const option = document.createElement("option");
-            option.value = veiculo.id;
-            option.textContent = `${veiculo.placa} - ${veiculo.modelo}`;
-            veiculoSelect.appendChild(option);
-          });
-
-          // Selecionar o veículo atual
-          const selectedVeiculo = veiculoSelect.getAttribute("data-selected");
-          if (selectedVeiculo) {
-            veiculoSelect.value = selectedVeiculo;
-          }
-        });
-    } else {
-      veiculoSelect.innerHTML = '<option value="">Selecione um veículo</option>';
-    }
-  };
-
-  // Carregar veículos ao carregar a página se um cliente já estiver selecionado
-  const selectedClienteId = clienteSelect.value;
-  if (selectedClienteId) {
-    loadVeiculos(selectedClienteId);
-  }
-
-  // Carregar veículos quando o cliente for alterado
-  clienteSelect.addEventListener("change", (event) => {
-    loadVeiculos(event.target.value);
-  });
-});
-</script>
-
+<%= javascript_include_tag 'cliente_veiculo_select' %>

@@ -52,8 +52,10 @@ class ServicosFlowTest < ActionDispatch::IntegrationTest
   end
 
   test "should destroy servico" do
+    post servicos_url, params: { servico: { codigo: "S1290", nome: "Novo Serviço", descricao: "Descrição do Serviço", preco: 150.00 } }
+
     assert_difference('Servico.count', -1) do
-      delete servico_url(@servico)
+      delete servico_url(Servico.last)
     end
 
     assert_redirected_to servicos_url

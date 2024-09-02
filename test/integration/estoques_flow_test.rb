@@ -4,6 +4,7 @@ class EstoquesFlowTest < ActionDispatch::IntegrationTest
   setup do
     sign_in users(:admin)
     @estoque = estoques(:one)
+    @peca = pecas(:one)
   end
 
 
@@ -20,7 +21,7 @@ class EstoquesFlowTest < ActionDispatch::IntegrationTest
 
   test "should create estoque" do
     assert_difference('Estoque.count') do
-      post estoques_url, params: { estoque: { codigo: "E1234", quantidade: 50 } }
+      post estoques_url, params: { estoque: { codigo: "E1234", quantidade: 50, peca_id: @peca.id } }
     end
 
     assert_redirected_to estoque_url(Estoque.last)

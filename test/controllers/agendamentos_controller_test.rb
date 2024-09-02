@@ -3,7 +3,12 @@ require "test_helper"
 class AgendamentosControllerTest < ActionDispatch::IntegrationTest
   setup do
     @agendamento = agendamentos(:one)
+    @cliente_user = users(:cliente)
+    sign_in @cliente_user
+
+    @cliente = clientes(:one)
   end
+
 
   test "should get index" do
     get agendamentos_url

@@ -70,19 +70,21 @@ class VeiculosController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_veiculo
-      @veiculo = Veiculo.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_veiculo
+    @veiculo = Veiculo.find_by(id: params[:id])
+    if @veiculo.nil?
       redirect_to veiculos_path, notice: "Veículo não encontrado."
     end
+  end
 
-    def load_clientes
-      @clientes = current_user.admin? ? Cliente.all : Cliente.where(id: current_user.cliente_id)
-    end
+  def load_clientes
+    @clientes = current_user.admin? ? Cliente.all : Cliente.where(id: current_user.cliente_id)
+  end
 
-    # Only allow a list of trusted parameters through.
-    def veiculo_params
-      params.require(:veiculo).permit(:placa, :modelo, :ano, :cor, :quilometragem, :chassi, :cliente_id)
-    end
+  # Only allow a list of trusted parameters through.
+  def veiculo_params
+    params.require(:veiculo).permit(:placa, :modelo, :ano, :cor, :quilometragem, :chassi, :cliente_id)
+  end
 end

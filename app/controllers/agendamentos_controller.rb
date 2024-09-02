@@ -68,7 +68,7 @@ class AgendamentosController < ApplicationController
     @agendamento = Agendamento.find_by(id: params[:agendamento_id])
     new_status = params[:status]
 
-    if Agendamento.statuses.keys.include?(new_status) && @agendamento.update(status: new_status)
+    if @agendamento.update(status: new_status)
       notice_message = handle_status_change(new_status)
       redirect_to agendamentos_path, notice: notice_message
     else
@@ -105,10 +105,8 @@ class AgendamentosController < ApplicationController
         data_termino: @agendamento.data,
         status: :agendado
       )
-
-      funcionarios_ids = params[:funcionario_ids] || []
-      atendimento.funcionarios << Funcionario.where(id: funcionarios_ids.reject(&:blank?))
-
+      funcionarios = Funcionario.where(id: params[:funcionario_ids])
+      atendimento.funcionarios << funcionarios
       "Agendamento aprovado. O atendimento logo será agendado."
     else
       "Agendamento reprovado."

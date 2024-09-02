@@ -1,13 +1,13 @@
 module ApplicationHelper
   def status_class(status)
     case status
-    when "pendente"
+    when "pendente", "agendado"
       "badge-pending"
     when "confirmado"
       "badge-confirmed"
-    when "em_andamento"
+    when "andamento"
       "badge-in-progress"
-    when "concluído"
+    when "concluido"
       "badge-completed"
     else
       "badge-secondary"

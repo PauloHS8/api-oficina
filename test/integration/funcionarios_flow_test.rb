@@ -29,7 +29,7 @@ class FuncionariosFlowTest < ActionDispatch::IntegrationTest
       assert_select "td", text: @funcionario.data_admissao.strftime("%d/%m/%Y")
       assert_select "a", text: "Exibir"
       assert_select "a", text: "Editar"
-      assert_select "a", text: "Excluir"
+      assert_select "button", text: "Excluir"
     end
   end
 
@@ -56,11 +56,9 @@ class FuncionariosFlowTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to funcionario_url(Funcionario.last)
     follow_redirect!
-    assert_select "title", text: "Detalhes do funcionario"
+    assert_select "title", text: "Detalhes do funcionário"
     assert_select "p", text: /Matrícula:\s*F1234/
   end
-
-
 
   test "should show funcionario" do
     get funcionario_url(@funcionario)
@@ -80,12 +78,9 @@ class FuncionariosFlowTest < ActionDispatch::IntegrationTest
     assert_select "p", text: /Data de admissão:\s*#{@funcionario.data_admissao.strftime("%Y-%m-%d")}/
 
     # Verifique se os links e botões para editar e excluir o funcionário estão presentes
-    assert_select "a", text: "Editar funcionario"
-    assert_select "button", text: "Excluir funcionario"
+    assert_select "a", text: "Editar funcionário"
+    assert_select "button", text: "Excluir funcionário"
   end
-
-
-
 
   test "should get edit funcionario" do
     get edit_funcionario_url(@funcionario)

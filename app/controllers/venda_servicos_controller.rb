@@ -25,7 +25,7 @@ class VendaServicosController < ApplicationController
 
     respond_to do |format|
       if @venda_servico.save
-        format.html { redirect_to venda_servico_url(@venda_servico), notice: "Venda servico was successfully created." }
+        format.html { redirect_to venda_servico_url(@venda_servico), notice: "Venda cadastrada com sucesso." }
         format.json { render :show, status: :created, location: @venda_servico }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +38,7 @@ class VendaServicosController < ApplicationController
   def update
     respond_to do |format|
       if @venda_servico.update(venda_servico_params)
-        format.html { redirect_to venda_servico_url(@venda_servico), notice: "Venda servico was successfully updated." }
+        format.html { redirect_to venda_servico_url(@venda_servico), notice: "Venda editada com sucesso." }
         format.json { render :show, status: :ok, location: @venda_servico }
       else
         format.html { render :edit, status: :unprocessable_entity }

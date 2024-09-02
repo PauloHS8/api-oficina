@@ -18,7 +18,9 @@ class ServicosControllerTest < ActionDispatch::IntegrationTest
 
   test "should create servico" do
     assert_difference("Servico.count") do
-      post servicos_url, params: { servico: { codigo: @servico.codigo, descricao: @servico.descricao, nome: @servico.nome, preco: @servico.preco } }
+      novo_servico = @servico
+      novo_servico.codigo = 'NovoCod'
+      post servicos_url, params: { servico: novo_servico.attributes }
     end
 
     assert_redirected_to servico_url(Servico.last)

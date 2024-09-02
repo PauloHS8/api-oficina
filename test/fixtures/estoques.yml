@@ -1,9 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  peca_id: 1
   codigo: P1234
   quantidade: 1
 
 two:
+  peca_id: 2
   codigo: A5678
   quantidade: 1

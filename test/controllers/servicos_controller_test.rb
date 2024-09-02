@@ -40,6 +40,9 @@ class ServicosControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should destroy servico" do
+    Agendamento.where(servico_id: @servico.id).delete_all
+    VendaServico.where(servico_id: @servico.id).delete_all
+
     assert_difference("Servico.count", -1) do
       delete servico_url(@servico)
     end

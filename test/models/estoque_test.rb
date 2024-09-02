@@ -15,8 +15,9 @@ class EstoqueTest < ActiveSupport::TestCase
   end
 
   test "deve salvar estoque válido" do
-    estoque = Estoque.new(codigo: "MeuCodigo", quantidade: 1)
-    assert estoque.save, "O estoque válido não foi salvo."
+    peca = pecas(:one)
+    estoque = Estoque.new(codigo: "MeuCodigo", quantidade: 1, peca: peca)
+    assert estoque.save, "O estoque válido não foi salvo. Erros: #{estoque.errors.full_messages.join(', ')}"
   end
 
   test "não deve salvar estoque sem código e quantidade" do
@@ -26,11 +27,10 @@ class EstoqueTest < ActiveSupport::TestCase
     assert_includes estoque.errors.messages[:quantidade], "não pode ficar em branco"
   end
 
-  test "deve associar com peças e salvar" do
-    estoque = estoques(:one)
+  test "deve associar com peça e salvar" do
     peca = pecas(:one)
-    estoque.pecas << peca
-    assert_includes estoque.pecas, peca, "O estoque deve estar associado à peça."
-    assert estoque.save
+    estoque = Estoque.new(codigo: "MeuCodigo", quantidade: 1, peca: peca)
+    assert estoque.save, "O estoque válido não foi salvo. Erros: #{estoque.errors.full_messages.join(', ')}"
+    assert_equal peca, estoque.peca, "O estoque deve estar associado à peça."
   end
 end

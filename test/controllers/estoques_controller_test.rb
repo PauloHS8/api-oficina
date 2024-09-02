@@ -17,8 +17,8 @@ class EstoquesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create estoque" do
-    assert_difference("Estoque.count") do
-      post estoques_url, params: { estoque: { codigo: @estoque.codigo, quantidade: @estoque.quantidade } }
+    assert_difference("Estoque.count", 1) do
+      post estoques_url, params: { estoque: { codigo: "NovoCodigo", quantidade: 1, peca_id: pecas(:one).id } }
     end
 
     assert_redirected_to estoque_url(Estoque.last)

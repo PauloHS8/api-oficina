@@ -3,6 +3,8 @@ require "test_helper"
 class VendaServicosControllerTest < ActionDispatch::IntegrationTest
   setup do
     @venda_servico = venda_servicos(:one)
+    @user = users(:admin)
+    sign_in @user
   end
 
   test "should get index" do
@@ -17,7 +19,7 @@ class VendaServicosControllerTest < ActionDispatch::IntegrationTest
 
   test "should create venda_servico" do
     assert_difference("VendaServico.count") do
-      post venda_servicos_url, params: { venda_servico: { cliente_id: @venda_servico.cliente_id, servico_id: @venda_servico.servico_id } }
+      post venda_servicos_url, params: { venda_servico: { cliente_id: @venda_servico.cliente_id, servico_id: @venda_servico.servico_id, veiculo_id: @venda_servico.veiculo_id } }
     end
 
     assert_redirected_to venda_servico_url(VendaServico.last)
@@ -34,7 +36,7 @@ class VendaServicosControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update venda_servico" do
-    patch venda_servico_url(@venda_servico), params: { venda_servico: { cliente_id: @venda_servico.cliente_id, servico_id: @venda_servico.servico_id } }
+    patch venda_servico_url(@venda_servico), params: { venda_servico: { cliente_id: @venda_servico.cliente_id, servico_id: @venda_servico.servico_id, veiculo_id: @venda_servico.veiculo_id } }
     assert_redirected_to venda_servico_url(@venda_servico)
   end
 

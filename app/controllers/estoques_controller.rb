@@ -1,5 +1,6 @@
 class EstoquesController < AdminController
   before_action :set_estoque, only: %i[ show edit update destroy ]
+  before_action :load_pecas, only: %i[ new create edit update ]
 
   # GET /estoques or /estoques.json
   def index
@@ -67,6 +68,10 @@ class EstoquesController < AdminController
 
       # Only allow a list of trusted parameters through.
     def estoque_params
-      params.require(:estoque).permit(:codigo, :quantidade)
+      params.require(:estoque).permit(:codigo, :quantidade, :peca_id)
     end
+
+  def load_pecas
+    @pecas = Peca.all
+  end
 end

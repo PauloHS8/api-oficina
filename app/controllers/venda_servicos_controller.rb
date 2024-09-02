@@ -3,7 +3,11 @@ class VendaServicosController < ApplicationController
 
   # GET /venda_servicos or /venda_servicos.json
   def index
-    @venda_servicos = VendaServico.includes(:cliente, :veiculo, :servico).all
+    if current_user.admin?
+      @venda_servicos = VendaServico.includes(:cliente, :veiculo, :servico).all
+    else
+      @venda_servicos = VendaServico.includes(:cliente, :veiculo, :servico).where(cliente_id: current_user.cliente_id)
+    end
   end
 
   # GET /venda_servicos/1 or /venda_servicos/1.json

@@ -15,9 +15,11 @@
     <div>
       <%= link_to "Voltar para vendas", venda_servicos_path, class: "btn btn-secondary" %>
     </div>
+    <% if current_user.admin? %>
     <div class="d-flex">
       <%= link_to "Editar venda", edit_venda_servico_path(@venda_servico), class: "btn btn-warning me-2" %>
       <%= confirm_delete_button "Excluir venda", @venda_servico, { class: "btn btn-danger" } %>
     </div>
+    <% end %>
   </div>
 </div>

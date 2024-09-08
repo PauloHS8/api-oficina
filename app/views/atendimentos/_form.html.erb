@@ -12,7 +12,10 @@
 
   <div class="mb-3">
     <%= form.label :cliente_id, "Cliente", class: "form-label" %>
-    <%= form.collection_select :cliente_id, Cliente.all, :id, :nome, { prompt: "Selecione um cliente" }, { class: "form-select" } %>
+    <%= form.collection_select :cliente_id, Cliente.all, :id, :nome, { prompt: "Selecione um cliente" },
+                               class: "form-select",
+                               data: { controller: "cliente",  action: "cliente#update_select_veiculos" }
+    %>
   </div>
 
   <div class="mb-3">
@@ -65,5 +68,3 @@
     <%= form.submit "Salvar", class: "btn btn-primary", disabled: Funcionario.none? %>
   </div>
 <% end %>
-
-<%= javascript_include_tag 'cliente_veiculo_select' %>

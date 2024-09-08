@@ -14,23 +14,24 @@
 
   <div class="mb-3">
     <%= form.label :cliente_id, class: "form-label" %>
-    <%= form.collection_select :cliente_id, Cliente.all, :id, :nome, {prompt: "Selecione um cliente"}, {class: 'form-select'} %>
+    <%= form.collection_select :cliente_id, Cliente.all, :id, :nome, { prompt: "Selecione um cliente" },
+                               class: 'form-select',
+                               data: { controller: "cliente",  action: "cliente#update_select_veiculos" }
+    %>
   </div>
 
   <div class="mb-3">
     <%= form.label :veiculo_id, "Veículo", class: "form-label" %>
-    <%= form.collection_select :veiculo_id, [], :id, :modelo, {prompt: "Selecione um veículo"}, {class: 'form-select', id: 'veiculo_select'} %>
+    <%= form.collection_select :veiculo_id, [], :id, :modelo, { prompt: "Selecione um veículo" }, { class: 'form-select', id: 'veiculo_select' } %>
   </div>
 
 
   <div class="mb-3">
     <%= form.label :servico_id, class: "form-label" %>
-    <%= form.collection_select :servico_id, Servico.all, :id, :nome, {prompt: "Selecione um serviço"}, {class: 'form-select'}  %>
+    <%= form.collection_select :servico_id, Servico.all, :id, :nome, { prompt: "Selecione um serviço" }, { class: 'form-select' } %>
   </div>
 
   <div class="text-center">
     <%= form.submit "Salvar", class: "btn btn-primary" %>
   </div>
 <% end %>
-
-<%= javascript_include_tag 'cliente_veiculo_select' %>

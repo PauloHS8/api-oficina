@@ -99,17 +99,21 @@ class AgendamentosController < ApplicationController
 
   def handle_status_change(status)
     if status == "confirmado"
-      atendimento = Atendimento.create!(
-        veiculo: @agendamento.veiculo,
-        data_inicio: @agendamento.data,
-        data_termino: @agendamento.data,
-        status: :agendado
-      )
-      funcionarios = Funcionario.where(id: params[:funcionario_ids])
-      atendimento.funcionarios << funcionarios
+      create_atendimento
       "Agendamento aprovado. O atendimento logo será agendado."
     else
       "Agendamento reprovado."
     end
+  end
+
+  def create_atendimento
+    atendimento = Atendimento.create!(
+      veiculo: @agendamento.veiculo,
+      data_inicio: @agendamento.data,
+      data_termino: @agendamento.data,
+      status: :agendado
+    )
+    funcionarios = Funcionario.where(id: params[:funcionario_ids])
+    atendimento.funcionarios << funcionarios
   end
 end

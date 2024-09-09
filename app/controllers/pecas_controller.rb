@@ -22,29 +22,12 @@ class PecasController < AdminController
   # POST /pecas or /pecas.json
   def create
     @peca = Peca.new(peca_params)
-
-    respond_to do |format|
-      if @peca.save
-        format.html { redirect_to peca_url(@peca), notice: "Peça cadastrada com sucesso." }
-        format.json { render :show, status: :created, location: @peca }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @peca.errors, status: :unprocessable_entity }
-      end
-    end
+    handle_save(@peca.save, :new, "Peça cadastrada com sucesso.")
   end
 
   # PATCH/PUT /pecas/1 or /pecas/1.json
   def update
-    respond_to do |format|
-      if @peca.update(peca_params)
-        format.html { redirect_to peca_url(@peca), notice: "Peça atualizada com sucesso." }
-        format.json { render :show, status: :ok, location: @peca }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @peca.errors, status: :unprocessable_entity }
-      end
-    end
+    handle_save(@peca.update(peca_params), :edit, "Peça atualizada com sucesso.")
   end
 
   # DELETE /pecas/1 or /pecas/1.json
@@ -59,16 +42,28 @@ class PecasController < AdminController
 
   private
 
-# Use callbacks to share common setup or constraints between actions.
+  # Use callbacks to share common setup or constraints between actions.
   def set_peca
     @peca = Peca.find_by(id: params[:id])
     if @peca.nil?
-     redirect_to pecas_path, notice: "Peça não encontrada."
+      redirect_to pecas_path, notice: "Peça não encontrada."
     end
   end
 
   # Only allow a list of trusted parameters through.
   def peca_params
     params.require(:peca).permit(:codigo, :nome, :preco, :tipo, :fabricante, :data_validade)
+  end
+
+  def handle_save(method_success, render_template, notice_message)
+    respond_to do |format|
+      if method_success
+        format.html { redirect_to peca_url(@peca), notice: notice_message }
+        format.json { render :show, status: :ok, location: @peca }
+      else
+        format.html { render render_template, status: :unprocessable_entity }
+        format.json { render json: @peca.errors, status: :unprocessable_entity }
+      end
+    end
   end
 end

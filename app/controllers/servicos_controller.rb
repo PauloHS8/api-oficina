@@ -22,29 +22,12 @@ class ServicosController < AdminController
   # POST /servicos or /servicos.json
   def create
     @servico = Servico.new(servico_params)
-
-    respond_to do |format|
-      if @servico.save
-        format.html { redirect_to servico_url(@servico), notice: "Servico cadastrado com sucesso." }
-        format.json { render :show, status: :created, location: @servico }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @servico.errors, status: :unprocessable_entity }
-      end
-    end
+    handle_save(@servico.save, :new, "Serviço cadastrado com sucesso.")
   end
 
   # PATCH/PUT /servicos/1 or /servicos/1.json
   def update
-    respond_to do |format|
-      if @servico.update(servico_params)
-        format.html { redirect_to servico_url(@servico), notice: "Servico editado com sucesso." }
-        format.json { render :show, status: :ok, location: @servico }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @servico.errors, status: :unprocessable_entity }
-      end
-    end
+    handle_save(@servico.update(servico_params), :edit, "Serviço editado com sucesso.")
   end
 
   # DELETE /servicos/1 or /servicos/1.json
@@ -69,5 +52,17 @@ class ServicosController < AdminController
   # Only allow a list of trusted parameters through.
   def servico_params
     params.require(:servico).permit(:codigo, :nome, :descricao, :preco)
+  end
+
+  def handle_save(method_success, render_template, notice_message)
+    respond_to do |format|
+      if method_success
+        format.html { redirect_to servico_url(@servico), notice: notice_message }
+        format.json { render :show, status: :ok, location: @servico }
+      else
+        format.html { render render_template, status: :unprocessable_entity }
+        format.json { render json: @servico.errors, status: :unprocessable_entity }
+      end
+    end
   end
 end

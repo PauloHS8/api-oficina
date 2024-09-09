@@ -67,10 +67,9 @@ class AgendamentosController < ApplicationController
   def update_status
     @agendamento = Agendamento.find_by(id: params[:agendamento_id])
     new_status = params[:status]
+    funcionarios_ids = params[:funcionario_ids].reject!(&:blank?)
 
-    params[:funcionario_ids].reject!(&:blank?)
-
-    if params[:funcionario_ids].empty?
+    if funcionarios_ids.empty?
       redirect_to agendamentos_path, alert: "É necessário selecionar pelo menos um funcionário para atualizar o status."
       return
     end

@@ -19,7 +19,7 @@
           <% end %>
 
           <div class="form-group mb-4">
-            <%= f.label :senha, class: "form-label" %>
+            <%= f.label :password, "Senha", class: "form-label" %>
             <i>(deixe em branco se não quiser alterar)</i>
             <%= f.password_field :password, autocomplete: "new-password", class: "form-control form-control-lg" %>
             <% if @minimum_password_length %>
@@ -30,12 +30,12 @@
           </div>
 
           <div class="form-group mb-4">
-            <%= f.label :confirmação_de_senha, class: "form-label" %>
+            <%= f.label :password_confirmation, "Confirme sua senha", class: "form-label" %>
             <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control form-control-lg" %>
           </div>
 
           <div class="form-group mb-4">
-            <%= f.label :senha_atual, class: "form-label" %>
+            <%= f.label :current_password, "Senha atual", class: "form-label" %>
             <i>(precisamos da sua senha atual para confirmar as alterações)</i>
             <%= f.password_field :current_password, autocomplete: "current-password", class: "form-control form-control-lg" %>
           </div>

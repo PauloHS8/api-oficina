@@ -29,29 +29,12 @@ class AgendamentosController < ApplicationController
   # POST /agendamentos or /agendamentos.json
   def create
     @agendamento = Agendamento.new(agendamento_params)
-
-    respond_to do |format|
-      if @agendamento.save
-        format.html { redirect_to agendamento_url(@agendamento), notice: "Agendamento criado com sucesso." }
-        format.json { render :show, status: :created, location: @agendamento }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @agendamento.errors, status: :unprocessable_entity }
-      end
-    end
+    handle_save(@agendamento.save, :new, "Agendamento criado com sucesso.")
   end
 
   # PATCH/PUT /agendamentos/1 or /agendamentos/1.json
   def update
-    respond_to do |format|
-      if @agendamento.update(agendamento_params)
-        format.html { redirect_to agendamento_url(@agendamento), notice: "Agendamento atualizado com sucesso." }
-        format.json { render :show, status: :ok, location: @agendamento }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @agendamento.errors, status: :unprocessable_entity }
-      end
-    end
+    handle_save(@agendamento.update(agendamento_params), :edit, "Agendamento atualizado com sucesso.")
   end
 
   # DELETE /agendamentos/1 or /agendamentos/1.json
@@ -67,6 +50,12 @@ class AgendamentosController < ApplicationController
   def update_status
     @agendamento = Agendamento.find_by(id: params[:agendamento_id])
     new_status = params[:status]
+    funcionarios_ids = params[:funcionario_ids].reject!(&:blank?)
+
+    if funcionarios_ids.empty?
+      redirect_to agendamentos_path, alert: "É necessário selecionar pelo menos um funcionário para atualizar o status."
+      return
+    end
 
     if @agendamento.update(status: new_status)
       notice_message = handle_status_change(new_status)
@@ -77,6 +66,18 @@ class AgendamentosController < ApplicationController
   end
 
   private
+
+  def handle_save(method_success, render_template, notice_message)
+    respond_to do |format|
+      if method_success
+        format.html { redirect_to agendamento_url(@agendamento), notice: notice_message }
+        format.json { render :show, status: :created, location: @agendamento }
+      else
+        format.html { render render_template, status: :unprocessable_entity }
+        format.json { render json: @agendamento.errors, status: :unprocessable_entity }
+      end
+    end
+  end
 
   def set_agendamento
     @agendamento = Agendamento.find_by(id: params[:id])
@@ -99,17 +100,21 @@ class AgendamentosController < ApplicationController
 
   def handle_status_change(status)
     if status == "confirmado"
-      atendimento = Atendimento.create!(
-        veiculo: @agendamento.veiculo,
-        data_inicio: @agendamento.data,
-        data_termino: @agendamento.data,
-        status: :agendado
-      )
-      funcionarios = Funcionario.where(id: params[:funcionario_ids])
-      atendimento.funcionarios << funcionarios
+      create_atendimento
       "Agendamento aprovado. O atendimento logo será agendado."
     else
       "Agendamento reprovado."
     end
+  end
+
+  def create_atendimento
+    atendimento = Atendimento.create!(
+      veiculo: @agendamento.veiculo,
+      data_inicio: @agendamento.data,
+      data_termino: @agendamento.data,
+      status: :agendado
+    )
+    funcionarios = Funcionario.where(id: params[:funcionario_ids])
+    atendimento.funcionarios << funcionarios
   end
 end

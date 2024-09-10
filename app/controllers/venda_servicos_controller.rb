@@ -26,29 +26,12 @@ class VendaServicosController < ApplicationController
   # POST /venda_servicos or /venda_servicos.json
   def create
     @venda_servico = VendaServico.new(venda_servico_params)
-
-    respond_to do |format|
-      if @venda_servico.save
-        format.html { redirect_to venda_servico_url(@venda_servico), notice: "Venda cadastrada com sucesso." }
-        format.json { render :show, status: :created, location: @venda_servico }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @venda_servico.errors, status: :unprocessable_entity }
-      end
-    end
+    handle_save(@venda_servico.save, :new, "Venda cadastrada com sucesso.")
   end
 
   # PATCH/PUT /venda_servicos/1 or /venda_servicos/1.json
   def update
-    respond_to do |format|
-      if @venda_servico.update(venda_servico_params)
-        format.html { redirect_to venda_servico_url(@venda_servico), notice: "Venda editada com sucesso." }
-        format.json { render :show, status: :ok, location: @venda_servico }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @venda_servico.errors, status: :unprocessable_entity }
-      end
-    end
+    handle_save(@venda_servico.update(venda_servico_params), :edit, "Venda editada com sucesso.")
   end
 
   # DELETE /venda_servicos/1 or /venda_servicos/1.json
@@ -73,5 +56,17 @@ class VendaServicosController < ApplicationController
   # Only allow a list of trusted parameters through.
   def venda_servico_params
     params.require(:venda_servico).permit(:servico_id, :veiculo_id, :cliente_id)
+  end
+
+  def handle_save(method_success, render_template, notice_message)
+    respond_to do |format|
+      if method_success
+        format.html { redirect_to venda_servico_url(@venda_servico), notice: notice_message }
+        format.json { render :show, status: :ok, location: @venda_servico }
+      else
+        format.html { render render_template, status: :unprocessable_entity }
+        format.json { render json: @venda_servico.errors, status: :unprocessable_entity }
+      end
+    end
   end
 end

@@ -22,29 +22,12 @@ class FuncionariosController < AdminController
   # POST /funcionarios or /funcionarios.json
   def create
     @funcionario = Funcionario.new(funcionario_params)
-
-    respond_to do |format|
-      if @funcionario.save
-        format.html { redirect_to funcionario_url(@funcionario), notice: "Funcionario cadastrado com sucesso." }
-        format.json { render :show, status: :created, location: @funcionario }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @funcionario.errors, status: :unprocessable_entity }
-      end
-    end
+    handle_save(@funcionario.save, :new, "Funcionário cadastrado com sucesso.")
   end
 
   # PATCH/PUT /funcionarios/1 or /funcionarios/1.json
   def update
-    respond_to do |format|
-      if @funcionario.update(funcionario_params)
-        format.html { redirect_to funcionario_url(@funcionario), notice: "Funcionario editado com sucesso." }
-        format.json { render :show, status: :ok, location: @funcionario }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @funcionario.errors, status: :unprocessable_entity }
-      end
-    end
+    handle_save(@funcionario.update(funcionario_params), :edit, "Funcionário editado com sucesso.")
   end
 
   # DELETE /funcionarios/1 or /funcionarios/1.json
@@ -70,5 +53,17 @@ class FuncionariosController < AdminController
   # Only allow a list of trusted parameters through.
   def funcionario_params
     params.require(:funcionario).permit(:matricula, :nome, :cargo, :email, :salario, :data_admissao, :cpf)
+  end
+
+  def handle_save(method_success, render_template, notice_message)
+    respond_to do |format|
+      if method_success
+        format.html { redirect_to funcionario_url(@funcionario), notice: notice_message }
+        format.json { render :show, status: :ok, location: @funcionario }
+      else
+        format.html { render render_template, status: :unprocessable_entity }
+        format.json { render json: @funcionario.errors, status: :unprocessable_entity }
+      end
+    end
   end
 end

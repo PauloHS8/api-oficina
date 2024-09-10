@@ -23,29 +23,12 @@ class EstoquesController < AdminController
   # POST /estoques or /estoques.json
   def create
     @estoque = Estoque.new(estoque_params)
-
-    respond_to do |format|
-      if @estoque.save
-        format.html { redirect_to estoque_url(@estoque), notice: "Estoque cadastrado com sucesso." }
-        format.json { render :show, status: :created, location: @estoque }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @estoque.errors, status: :unprocessable_entity }
-      end
-    end
+    handle_save(@estoque.save, :new, "Estoque cadastrado com sucesso.")
   end
 
   # PATCH/PUT /estoques/1 or /estoques/1.json
   def update
-    respond_to do |format|
-      if @estoque.update(estoque_params)
-        format.html { redirect_to estoque_url(@estoque), notice: "Estoque editado com sucesso." }
-        format.json { render :show, status: :ok, location: @estoque }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @estoque.errors, status: :unprocessable_entity }
-      end
-    end
+    handle_save(@estoque.update(estoque_params), :edit, "Estoque editado com sucesso.")
   end
 
   # DELETE /estoques/1 or /estoques/1.json
@@ -75,5 +58,17 @@ class EstoquesController < AdminController
 
   def load_pecas
     @pecas = Peca.all
+  end
+
+  def handle_save(method_success, render_template, notice_message)
+    respond_to do |format|
+      if method_success
+        format.html { redirect_to estoque_url(@estoque), notice: notice_message }
+        format.json { render :show, status: :ok, location: @estoque }
+      else
+        format.html { render render_template, status: :unprocessable_entity }
+        format.json { render json: @estoque.errors, status: :unprocessable_entity }
+      end
+    end
   end
 end

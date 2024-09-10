@@ -27,30 +27,14 @@ class AtendimentosController < ApplicationController
   # POST /atendimentos or /atendimentos.json
   def create
     @atendimento = Atendimento.new(atendimento_params)
-
-    respond_to do |format|
-      if @atendimento.save
-        AtendimentoMailer.atendimento_criado(@atendimento).deliver_later
-        format.html { redirect_to atendimento_url(@atendimento), notice: "Atendimento cadastrado com sucesso." }
-        format.json { render :show, status: :created, location: @atendimento }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @atendimento.errors, status: :unprocessable_entity }
-      end
+    handle_save(@atendimento.save, :new, "Atendimento cadastrado com sucesso.") do
+      AtendimentoMailer.atendimento_criado(@atendimento).deliver_later
     end
   end
 
   # PATCH/PUT /atendimentos/1 or /atendimentos/1.json
   def update
-    respond_to do |format|
-      if @atendimento.update(atendimento_params)
-        format.html { redirect_to atendimento_url(@atendimento), notice: "Atendimento editado com sucesso." }
-        format.json { render :show, status: :ok, location: @atendimento }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @atendimento.errors, status: :unprocessable_entity }
-      end
-    end
+    handle_save(@atendimento.update(atendimento_params), :edit, "Atendimento editado com sucesso.")
   end
 
   # DELETE /atendimentos/1 or /atendimentos/1.json
@@ -76,5 +60,17 @@ class AtendimentosController < ApplicationController
   # Only allow a list of trusted parameters through.
   def atendimento_params
     params.require(:atendimento).permit(:data_inicio, :data_termino, :status, :veiculo_id, funcionario_ids: [])
+  end
+
+  def handle_save(method_success, render_template, notice_message)
+    respond_to do |format|
+      if method_success
+        format.html { redirect_to atendimento_url(@atendimento), notice: notice_message }
+        format.json { render :show, status: :ok, location: @atendimento }
+      else
+        format.html { render render_template, status: :unprocessable_entity }
+        format.json { render json: @atendimento.errors, status: :unprocessable_entity }
+      end
+    end
   end
 end
